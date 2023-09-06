@@ -30,7 +30,7 @@ CREATE TABLE image (
 -- Table: player
 CREATE TABLE player (
     id serial  NOT NULL,
-    image_id int  NOT NULL,
+    image_id int  NULL,
     user_id int  NOT NULL,
     email varchar(255)  NOT NULL,
     CONSTRAINT player_pk PRIMARY KEY (id)

@@ -25,6 +25,7 @@ INSERT INTO public.answer (id, question_id, text, is_correct, sequence) VALUES (
 ', false, null);
 INSERT INTO public.answer (id, question_id, text, is_correct, sequence) VALUES (4, 1, e'Koodi keerulisemate üksikasjade kogum, mis on olulisemate osade sees peidus.
 ', true, null);
+
 INSERT INTO public.answer (id, question_id, text, is_correct, sequence) VALUES (5, 3, 'Spring', true, null);
 INSERT INTO public.answer (id, question_id, text, is_correct, sequence) VALUES (6, 3, 'Hibernate', true, null);
 INSERT INTO public.answer (id, question_id, text, is_correct, sequence) VALUES (7, 3, 'Sky', false, null);
@@ -35,4 +36,4 @@ INSERT INTO public.answer (id, question_id, text, is_correct, sequence) VALUES (
 INSERT INTO public.answer (id, question_id, text, is_correct, sequence) VALUES (12, 5, 'Nimi', true, 3);
 INSERT INTO public.answer (id, question_id, text, is_correct, sequence) VALUES (13, 5, 'Parameetrid', true, 4);
 
-
+INSERT INTO public.player (id, image_id, user_id, email) VALUES (1, null, 2, 'example@example.com');

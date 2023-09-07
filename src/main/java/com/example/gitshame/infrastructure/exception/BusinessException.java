@@ -1,4 +1,4 @@
-package com.example.gitshame.infrastructure;
+package com.example.gitshame.infrastructure.exception;
 
 import lombok.Data;
 

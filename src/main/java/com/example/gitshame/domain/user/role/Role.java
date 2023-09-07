@@ -19,6 +19,6 @@ public class Role {
 
     @NotNull
     @Column(name = "name", nullable = false)
-    private Integer name;
+    private String name;
 
 }

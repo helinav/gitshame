@@ -2,7 +2,7 @@ package com.example.gitshame.validation;
 
 
 import com.example.gitshame.domain.User;
-import com.example.gitshame.infrastructure.BusinessException;
+import com.example.gitshame.infrastructure.exception.BusinessException;
 
 import java.util.Optional;
 

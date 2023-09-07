@@ -1,15 +1,12 @@
 package com.example.gitshame.validation;
 
-import com.example.gitshame.domain.user.User;
-import ee.valiit.bank30back.domain.location.Location;
-import ee.valiit.bank30back.domain.user.User;
-import ee.valiit.bank30back.infrastructure.exception.BusinessException;
-import ee.valiit.bank30back.infrastructure.exception.DataNotFoundException;
 
-import java.util.List;
+import com.example.gitshame.domain.User;
+import com.example.gitshame.infrastructure.BusinessException;
+
 import java.util.Optional;
 
-import static ee.valiit.bank30back.validation.Error.*;
+import static com.example.gitshame.validation.Error.INCORRECT_CREDENTIALS;
 
 public class ValidationService {
 
@@ -20,3 +17,4 @@ public class ValidationService {
         return optionalUser.get();
     }
 }
+

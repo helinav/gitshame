@@ -1,5 +1,6 @@
 package com.example.gitshame.domain.user;
 
+import com.example.gitshame.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

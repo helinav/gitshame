@@ -11,10 +11,10 @@ public class LoginController {
     @Resource
     private LoginService loginService;
 
-    @GetMapping("/login")
+    @GetMapping ("/login")
     public void login(@RequestParam String username, @RequestParam String password) {
         loginService.login(username, password);
 
     }
-
 }
+

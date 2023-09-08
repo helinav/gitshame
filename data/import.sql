@@ -36,4 +36,3 @@ INSERT INTO public.answer (id, question_id, text, is_correct, sequence) VALUES (
 INSERT INTO public.answer (id, question_id, text, is_correct, sequence) VALUES (12, 5, 'Nimi', true, 3);
 INSERT INTO public.answer (id, question_id, text, is_correct, sequence) VALUES (13, 5, 'Parameetrid', true, 4);
 
-INSERT INTO public.player (id, image_id, user_id, email) VALUES (1, null, 2, 'example@example.com');

@@ -1,7 +1,5 @@
-package com.example.gitshame.domain.user.role;
+package com.example.gitshame.domain.user;
 
-import com.example.gitshame.domain.User;
-import com.example.gitshame.domain.user.UserRepository;
 import com.example.gitshame.validation.ValidationService;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
@@ -21,5 +19,14 @@ public class UserService {
         return ValidationService.getValidUser(optionalUser);
     }
 
+
+    public void saveUser(User user) {
+        userRepository.save(user);
+    }
+
+    public void validateUsernameIsAvailable(String username) {
+        boolean userExists = userRepository.userExistsBy(username);
+        ValidationService.validateUsernameIsAvailable(userExists);
+    }
 
 }

@@ -1,6 +1,6 @@
-package com.example.gitshame.business;
+package com.example.gitshame.business.login;
 
-import com.example.gitshame.business.dto.LoginResponse;
+import com.example.gitshame.business.login.dto.LoginResponse;
 import com.example.gitshame.infrastructure.error.ApiError;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;

@@ -74,7 +74,7 @@ CREATE TABLE question (
 
 -- Table: role
 CREATE TABLE role (
-                      id int  NOT NULL,
+                      id serial  NOT NULL,
                       name varchar(255)  NOT NULL,
                       CONSTRAINT role_pk PRIMARY KEY (id)
 );

@@ -1,4 +1,4 @@
-package com.example.gitshame.domain;
+package com.example.gitshame.domain.user;
 
 import com.example.gitshame.domain.user.role.Role;
 import jakarta.persistence.*;

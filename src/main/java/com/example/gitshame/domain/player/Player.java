@@ -1,6 +1,6 @@
 package com.example.gitshame.domain.player;
 
-import com.example.gitshame.domain.User;
+import com.example.gitshame.domain.user.User;
 import com.example.gitshame.domain.image.Image;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;

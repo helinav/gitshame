@@ -1,9 +1,9 @@
-package com.example.gitshame.business;
+package com.example.gitshame.business.login;
 
-import com.example.gitshame.business.dto.LoginResponse;
-import com.example.gitshame.domain.User;
-import com.example.gitshame.domain.UserMapper;
-import com.example.gitshame.domain.user.role.UserService;
+import com.example.gitshame.business.login.dto.LoginResponse;
+import com.example.gitshame.domain.user.User;
+import com.example.gitshame.domain.user.UserMapper;
+import com.example.gitshame.domain.user.UserService;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 

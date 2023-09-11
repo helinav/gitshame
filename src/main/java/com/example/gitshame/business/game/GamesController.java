@@ -1,20 +1,21 @@
 package com.example.gitshame.business.game;
 
 
+import com.example.gitshame.business.game.dto.GameResponse;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class GameResourceController {
+public class GamesController {
 
     @Resource
-    private GameResourceService gameResourceService;
+    private GamesService gamesService;
 
 
     @PostMapping("/game")
-    public void addGame(@RequestParam String gameName ) {
-        gameResourceService.addGame(gameName);
+    public GameResponse addGame(@RequestParam String gameName) {
+        return gamesService.addGame(gameName);
     }
 }

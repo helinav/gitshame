@@ -1,5 +1,6 @@
 package com.example.gitshame.domain.game;
 
+import com.example.gitshame.domain.user.UserRepository;
 import com.example.gitshame.validation.ValidationService;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
@@ -9,10 +10,13 @@ public class GameService {
 
     @Resource
     private GameRepository gameRepository;
+    private final UserRepository userRepository;
 
-    public void saveGame(String gameName) {
-        Game game = new Game();
-        game.setName(gameName);
+    public GameService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
+    public void saveGame(Game game) {
         gameRepository.save(game);
     }
 

@@ -28,5 +28,11 @@ public class ValidationService {
             throw new BusinessException(EMAIL_ALREADY_EXISTS.getMessage(), EMAIL_ALREADY_EXISTS.getErrorCode());
         }
     }
+
+    public static void validateGameNameIsAvailable(boolean gameExists) {
+        if (gameExists) {
+            throw new BusinessException(GAME_NAME_ALREADY_EXISTS.getMessage(), GAME_NAME_ALREADY_EXISTS.getErrorCode());
+        }
+    }
 }
 

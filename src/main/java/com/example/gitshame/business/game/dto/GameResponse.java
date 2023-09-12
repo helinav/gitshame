@@ -18,5 +18,5 @@ import java.io.Serializable;
 
 public class GameResponse implements Serializable {
     @NotNull
-    Integer gameId;
+    private Integer gameId;
 }

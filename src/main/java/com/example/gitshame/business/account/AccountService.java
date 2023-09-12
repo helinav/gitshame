@@ -11,8 +11,6 @@ import com.example.gitshame.domain.user.UserService;
 import com.example.gitshame.domain.user.role.Role;
 import com.example.gitshame.domain.user.role.RoleService;
 import jakarta.annotation.Resource;
-import org.mapstruct.Mapping;
-import org.springframework.data.annotation.ReadOnlyProperty;
 import org.springframework.stereotype.Service;
 
 @Service

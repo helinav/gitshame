@@ -23,4 +23,8 @@ public class Image {
     @Column(name = "status", nullable = false, length = Integer.MAX_VALUE)
     private String status;
 
+    @NotNull
+    @Column(name = "type", nullable = false, length = Integer.MAX_VALUE)
+    private String type;
+
 }

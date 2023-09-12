@@ -11,4 +11,8 @@ public class ImageService {
     public Image getImageBy(Integer imageId) {
         return imageRepository.getReferenceById(imageId);
     }
+
+    public void saveAvatar(Image avatar) {
+        imageRepository.save(avatar);
+    }
 }

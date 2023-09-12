@@ -4,6 +4,7 @@ import com.example.gitshame.domain.image.Image;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.Value;
 
 import java.io.Serializable;
@@ -13,12 +14,13 @@ import java.io.Serializable;
  */
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 
 public class AvatarRequest implements Serializable {
     @NotNull
-    byte[] data;
+    private String imageData;
     @NotNull
-    String status;
+    private String status;
     @NotNull
-    String type;
+    private String type;
 }

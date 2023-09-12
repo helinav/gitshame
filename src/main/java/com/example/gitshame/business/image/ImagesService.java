@@ -26,7 +26,7 @@ public class ImagesService {
 
     private Image createAvatar(AvatarRequest request) {
         Image image = imageMapper.toAvatar(request);
-        String requestImageData = Arrays.toString(request.getData());
+        String requestImageData = request.getImageData();
         Image imageFromData = ImageConverter.imageDataToImage(requestImageData);
         image.setData(imageFromData.getData());
         return image;

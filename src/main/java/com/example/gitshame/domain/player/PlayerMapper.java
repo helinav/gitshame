@@ -1,5 +1,6 @@
 package com.example.gitshame.domain.player;
 
+import com.example.gitshame.business.login.dto.PlayerDto;
 import org.mapstruct.*;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = MappingConstants.ComponentModel.SPRING)

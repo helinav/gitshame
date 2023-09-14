@@ -30,8 +30,6 @@ public class AccountService {
     
     @Resource
     private PlayerService playerService;
-    
-
 
     public void addAccount(AccountRequest request) {
         userService.validateUsernameIsAvailable(request.getUsername());
@@ -57,6 +55,5 @@ public class AccountService {
         playerService.savePlayer(player);
     }
 
-   
 }
 

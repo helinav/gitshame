@@ -4,7 +4,6 @@ import com.example.gitshame.domain.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import java.io.Serializable;
 
 /**
@@ -14,6 +13,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 public class LoginResponse implements Serializable {
+
     private Integer userId;
     private String roleName;
 }

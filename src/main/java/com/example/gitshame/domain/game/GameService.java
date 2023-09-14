@@ -10,7 +10,6 @@ public class GameService {
     @Resource
     private GameRepository gameRepository;
 
-
     public void saveGame(Game game) {
         gameRepository.save(game);
     }

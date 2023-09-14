@@ -32,6 +32,5 @@ public class GamesController {
     @Operation(summary = "Uue vastuse lisamine.")
     public void addAnswer(@RequestParam Integer questionId, @RequestBody AnswerRequest request) {
         gamesService.addAnswer(questionId, request);
-
     }
 }

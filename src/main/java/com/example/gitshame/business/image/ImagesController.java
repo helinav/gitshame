@@ -1,6 +1,6 @@
 package com.example.gitshame.business.image;
 
-import com.example.gitshame.business.image.dto.AvatarDto;
+import com.example.gitshame.business.image.dto.AvatarResponse;
 import com.example.gitshame.business.image.dto.AvatarRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -31,9 +31,8 @@ public class ImagesController {
     @Operation(summary = "Toob imageId ja imageData abil süsteemist avataride pildid")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "OK")})
-    public List<AvatarDto> getAvatars() {
-        List<AvatarDto> avatars = imagesService.getAvatars();
-        return avatars;
+    public List<AvatarResponse> getAvatars() {
+        return imagesService.getAvatars();
     }
 }
 

@@ -8,7 +8,6 @@ public class RoleService {
     @Resource
     private RoleRepository roleRepository;
 
-
     public Role getRolePlayer() {
         return roleRepository.getReferenceById(2);
     }

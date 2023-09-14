@@ -30,5 +30,4 @@ public class AccountRequest implements Serializable {
 
     @NotNull
     private Integer imageId;
-
 }

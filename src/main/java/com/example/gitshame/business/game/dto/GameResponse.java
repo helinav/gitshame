@@ -5,8 +5,6 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Value;
-
 import java.io.Serializable;
 
 /**
@@ -17,6 +15,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 
 public class GameResponse implements Serializable {
+
     @NotNull
     private Integer gameId;
 }

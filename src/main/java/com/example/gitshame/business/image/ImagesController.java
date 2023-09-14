@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.annotation.Resource;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,7 +24,10 @@ public class ImagesController {
         imagesService.createAndSaveAvatar(request);
     }
 
-
+    @GetMapping("/account")
+    public void getAvatars() {
+        imagesService.getAvatars();
+    }
 }
 
 

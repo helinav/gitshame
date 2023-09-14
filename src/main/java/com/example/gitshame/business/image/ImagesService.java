@@ -31,5 +31,9 @@ public class ImagesService {
         image.setData(imageFromData.getData());
         return image;
     }
+
+    public void getAvatars() {
+
+    }
 }
 

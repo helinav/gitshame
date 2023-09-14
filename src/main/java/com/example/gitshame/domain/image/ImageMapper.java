@@ -1,5 +1,6 @@
 package com.example.gitshame.domain.image;
 
+import com.example.gitshame.business.game.dto.QuestionRequest;
 import com.example.gitshame.business.image.dto.AvatarRequest;
 import org.mapstruct.*;
 
@@ -9,5 +10,11 @@ public interface ImageMapper {
     @Mapping(constant = "A", target = "status")
     @Mapping(constant = "A", target = "type")
     Image toAvatar (AvatarRequest request);
+
+
+    @Mapping(constant = "Q", target="type")
+    @Mapping(constant = "A", target="status")
+
+    Image toImage(QuestionRequest request);
 
 }

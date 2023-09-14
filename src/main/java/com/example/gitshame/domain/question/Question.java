@@ -1,5 +1,7 @@
 package com.example.gitshame.domain.question;
 
+import com.example.gitshame.domain.game.Game;
+import com.example.gitshame.domain.image.Image;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -29,5 +31,19 @@ public class Question {
     @NotNull
     @Column(name = "time_limit", nullable = false)
     private Integer timeLimit;
+
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "type_id", nullable = false)
+    private Type type;
+
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "game_id", nullable = false)
+    private Game game;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "image_id")
+    private Image image;
 
 }

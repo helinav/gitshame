@@ -15,4 +15,8 @@ public class ImageService {
     public void saveAvatar(Image avatar) {
         imageRepository.save(avatar);
     }
+
+    public void saveImage(Image image) {
+        imageRepository.save(image);
+    }
 }

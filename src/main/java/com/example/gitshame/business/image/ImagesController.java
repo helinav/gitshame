@@ -28,6 +28,9 @@ public class ImagesController {
     }
 
     @GetMapping("/account")
+    @Operation(summary = "Toob imageId ja imageData abil süsteemist avataride pildid")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "OK")})
     public List<AvatarDto> getAvatars() {
         List<AvatarDto> avatars = imagesService.getAvatars();
         return avatars;

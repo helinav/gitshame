@@ -26,6 +26,12 @@ public interface ImageMapper {
 
     @Mapping(constant = "A", target = "status")
     @Mapping(constant = "Q", target = "type")
+    @Mapping(source = "imageData", target = "data", qualifiedByName = "stringToByteArray")
     Image toImage(QuestionRequest request);
+
+    @Named("stringToByteArray")
+    static byte[] stringToByteArray(String imageData) {
+        return ImageConverter.getBytesArrayFromImageData(imageData);
+    }
 }
 

@@ -7,7 +7,7 @@ import org.mapstruct.*;
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = MappingConstants.ComponentModel.SPRING)
 public interface QuestionMapper {
 
-    Question toQuestion(QuestionRequest request, Integer gameId);
+    Question toQuestion(QuestionRequest request);
 
     @Mapping(source = "id", target = "questionId")
     QuestionResponse toQuestionResponse(Question question);

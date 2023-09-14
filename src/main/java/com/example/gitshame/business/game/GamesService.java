@@ -11,7 +11,6 @@ import com.example.gitshame.domain.image.Image;
 import com.example.gitshame.domain.image.ImageMapper;
 import com.example.gitshame.domain.image.ImageService;
 import com.example.gitshame.domain.question.*;
-import com.example.gitshame.util.ImageConverter;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
@@ -51,18 +50,17 @@ public class GamesService {
     }
 
     public QuestionResponse addQuestion(Integer gameId, QuestionRequest request) {
-        Question question = createQuestion(gameId, request);
-        Image image = createAndSaveQuestionImage(request);
-        setGameIdToQuestion(gameId, question);
-        setTypeIdToQuestion(request, question);
-        setImageIdToQuestion(question, image);
+        Question question = createQuestion(request);
+        handleImage(request, question);
+        setGameToQuestion(gameId, question);
+        setTypeToQuestion(request.getTypeId(), question);
         saveQuestion(question);
         return questionMapper.toQuestionResponse(question);
     }
 
     public void addAnswer(Integer questionId, AnswerRequest request) {
-        Answer answer = createAnswer(request);
-        setQuestionIdToAnswer(questionId, answer);
+        Answer answer = answerMapper.toAnswer(request);
+        setQuestionToAnswer(questionId, answer);
         answerService.saveAnswer(answer);
     }
 
@@ -78,43 +76,42 @@ public class GamesService {
         return game;
     }
 
-    private Question createQuestion(Integer gameId, QuestionRequest request) {
-        return questionMapper.toQuestion(request, gameId);
+    private Question createQuestion(QuestionRequest request) {
+        return questionMapper.toQuestion(request);
+    }
+
+    private void handleImage(QuestionRequest request, Question question) {
+        if (hasImage(request)) {
+            Image image = createAndSaveQuestionImage(request);
+            question.setImage(image);
+        }
+    }
+
+    private static boolean hasImage(QuestionRequest request) {
+        return !request.getImageData().isEmpty();
     }
 
     private Image createAndSaveQuestionImage(QuestionRequest request) {
         Image image = imageMapper.toImage(request);
-        String requestImageData = request.getImageData();
-        Image imageFromData = ImageConverter.imageDataToImage(requestImageData);
-        image.setData(imageFromData.getData());
         imageService.saveImage(image);
         return image;
     }
 
-    private void setGameIdToQuestion(Integer gameId, Question question) {
+    private void setGameToQuestion(Integer gameId, Question question) {
         Game game = gameService.getGame(gameId);
         question.setGame(game);
     }
 
-    private void setTypeIdToQuestion(QuestionRequest request, Question question) {
-        Type type = typeService.getType(request.getTypeId());
+    private void setTypeToQuestion(Integer typeId, Question question) {
+        Type type = typeService.getType(typeId);
         question.setType(type);
     }
 
-    private static void setImageIdToQuestion(Question question, Image image) {
-        question.setImage(image);
-    }
-
-    private Question saveQuestion(Question question) {
+    private void saveQuestion(Question question) {
         questionService.saveQuestion(question);
-        return question;
     }
 
-    private Answer createAnswer(AnswerRequest request) {
-        return answerMapper.toAnswer(request);
-    }
-
-    private void setQuestionIdToAnswer(Integer questionId, Answer answer) {
+    private void setQuestionToAnswer(Integer questionId, Answer answer) {
         Question question = questionService.getQuestion(questionId);
         answer.setQuestion(question);
     }

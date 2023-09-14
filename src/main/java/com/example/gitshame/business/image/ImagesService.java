@@ -1,5 +1,6 @@
 package com.example.gitshame.business.image;
 
+import com.example.gitshame.business.image.dto.AvatarDto;
 import com.example.gitshame.business.image.dto.AvatarRequest;
 import com.example.gitshame.domain.image.Image;
 import com.example.gitshame.domain.image.ImageMapper;
@@ -8,7 +9,7 @@ import com.example.gitshame.util.ImageConverter;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
+import java.util.List;
 
 @Service
 public class ImagesService {
@@ -30,6 +31,14 @@ public class ImagesService {
         Image imageFromData = ImageConverter.imageDataToImage(requestImageData);
         image.setData(imageFromData.getData());
         return image;
+    }
+
+    public List<AvatarDto> getAvatars() {
+        List<Image> avatars = imageService.getAvatars();
+        List<AvatarDto> avatarDtos = imageMapper.toAvatarDtos(avatars);
+        return avatarDtos;
+
+
     }
 }
 

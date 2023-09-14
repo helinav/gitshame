@@ -3,6 +3,8 @@ package com.example.gitshame.domain.image;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ImageService {
     @Resource
@@ -16,7 +18,9 @@ public class ImageService {
         imageRepository.save(avatar);
     }
 
-    public void saveImage(Image image) {
-        imageRepository.save(image);
+    public List<Image> getAvatars() {
+        List<Image> images = imageRepository.getAvatarsBy();
+        return images;
+
     }
 }

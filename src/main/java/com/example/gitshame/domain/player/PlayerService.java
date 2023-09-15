@@ -17,4 +17,8 @@ public class PlayerService {
         boolean emailExists = playerRepository.existsByEmail(email);
         ValidationService.validateEmailIsAvailable(emailExists);
     }
+
+    public Player getPlayer(Integer id) {
+        return playerRepository.getPlayerBy(id);
+    }
 }

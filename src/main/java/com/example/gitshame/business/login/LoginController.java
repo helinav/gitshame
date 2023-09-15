@@ -19,7 +19,7 @@ public class LoginController {
     private LoginService loginService;
 
     @GetMapping ("/login")
-    @Operation(summary = "Sisse logimine. Tagastab userId ja roleName",
+    @Operation(summary = "Sisse logimine. Tagastab userId, roleName ja playerId",
             description = """
                 Süsteemist otsitakse username ja password abil kasutajat, kelle konto on ka aktiivne.
                 Kui vastet ei leita vistakse viga errorCode'ga 111""")

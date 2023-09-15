@@ -37,14 +37,15 @@ CREATE TABLE player (
                         CONSTRAINT player_pk PRIMARY KEY (id)
 );
 
--- Table: player_answers
-CREATE TABLE player_answers (
+-- Table: player_answer
+CREATE TABLE player_answer (
                                 id serial  NOT NULL,
                                 question_id int  NOT NULL,
+                                answer_id int  NOT NULL,
                                 player_game_id int  NOT NULL,
                                 start_time timestamp  NOT NULL,
                                 end_time timestamp  NULL,
-                                CONSTRAINT player_answers_pk PRIMARY KEY (id)
+                                CONSTRAINT player_answer_pk PRIMARY KEY (id)
 );
 
 -- Table: player_game
@@ -105,18 +106,25 @@ ALTER TABLE answer ADD CONSTRAINT answer_question
             INITIALLY IMMEDIATE
 ;
 
--- Reference: player_answers_player_game (table: player_answers)
-ALTER TABLE player_answers ADD CONSTRAINT player_answers_player_game
+-- Reference: player_answer_player_game (table: player_answer)
+ALTER TABLE player_answer ADD CONSTRAINT player_answer_player_game
     FOREIGN KEY (player_game_id)
         REFERENCES player_game (id)
         NOT DEFERRABLE
             INITIALLY IMMEDIATE
 ;
 
--- Reference: player_answers_question (table: player_answers)
-ALTER TABLE player_answers ADD CONSTRAINT player_answers_question
+-- Reference: player_answer_question (table: player_answer)
+ALTER TABLE player_answer ADD CONSTRAINT player_answer_question
     FOREIGN KEY (question_id)
         REFERENCES question (id)
+        NOT DEFERRABLE
+            INITIALLY IMMEDIATE
+
+;-- Reference: player_answer_question (table: player_answer)
+ALTER TABLE player_answer ADD CONSTRAINT player_answer_answer
+    FOREIGN KEY (answer_id)
+        REFERENCES answer (id)
         NOT DEFERRABLE
             INITIALLY IMMEDIATE
 ;

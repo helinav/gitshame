@@ -68,7 +68,7 @@ CREATE TABLE question (
                           game_id int  NOT NULL,
                           image_id int  NULL,
                           text varchar(255)  NOT NULL,
-                          answer_explanation varchar(255)  NOT NULL,
+                          answer_explanation varchar(500)  NOT NULL,
                           time_limit int  NOT NULL,
                           CONSTRAINT question_pk PRIMARY KEY (id)
 );

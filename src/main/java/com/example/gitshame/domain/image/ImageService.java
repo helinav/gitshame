@@ -19,7 +19,7 @@ public class ImageService {
     }
 
     public List<Image> getAvatars() {
-        List<Image> images = imageRepository.getAvatarsBy();
+        List<Image> images = imageRepository.getAvatarsBy("A");
         return images;
     }
     public void saveImage(Image image) {

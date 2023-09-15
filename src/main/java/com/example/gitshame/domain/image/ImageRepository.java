@@ -9,4 +9,8 @@ public interface ImageRepository extends JpaRepository<Image, Integer> {
     @Query("select i from Image i where i.id = ?1 and i.data = ?2")
     List<Image> getAvatarsBy();
 
+    @Query("select i from Image i where i.type like ?1")
+    List<Image> getAvatarsBy(String type);
+
+
 }

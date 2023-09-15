@@ -1,6 +1,7 @@
-package com.example.gitshame.domain.player;
+package com.example.gitshame.domain.player.playeranswer;
 
 import com.example.gitshame.domain.answer.Answer;
+import com.example.gitshame.domain.player.playergame.PlayerGame;
 import com.example.gitshame.domain.question.Question;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -24,10 +25,13 @@ public class PlayerAnswer {
     @JoinColumn(name = "question_id", nullable = false)
     private Question question;
 
-    @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "answer_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "answer_id")
     private Answer answer;
+
+    @NotNull
+    @Column(name = "is_correct", nullable = false)
+    private Boolean isCorrect = false;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

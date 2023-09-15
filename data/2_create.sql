@@ -41,7 +41,8 @@ CREATE TABLE player (
 CREATE TABLE player_answer (
                                 id serial  NOT NULL,
                                 question_id int  NOT NULL,
-                                answer_id int  NOT NULL,
+                                answer_id int  NULL,
+                                is_correct boolean  NOT NULL,
                                 player_game_id int  NOT NULL,
                                 start_time timestamp  NOT NULL,
                                 end_time timestamp  NULL,

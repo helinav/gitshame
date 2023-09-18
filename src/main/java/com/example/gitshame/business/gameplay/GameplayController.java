@@ -1,13 +1,12 @@
 package com.example.gitshame.business.gameplay;
 
 
-import com.example.gitshame.business.gameplay.dto.PlayerAnswerRequest;
-import com.example.gitshame.business.gameplay.dto.PlayerGameRequest;
+import com.example.gitshame.business.gameplay.dto.NewGameRequest;
+import com.example.gitshame.business.gameplay.dto.StartAnswerRequest;
+import com.example.gitshame.domain.question.QuestionInfo;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.annotation.Resource;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
@@ -17,13 +16,27 @@ public class GameplayController {
 
     @PostMapping("/gameplay")
     @Operation(summary = "Uue mängija mängu alustamine.")
-    public void addGameplay (@RequestBody PlayerGameRequest request) {
-        gameplayService.addGameplay(request);
+    public void startNewGame(@RequestBody NewGameRequest request) {
+        gameplayService.startNewGame(request);
+    }
+
+    @GetMapping("/next-question")
+    @Operation(summary = "Järgmine küsimus.")
+    public QuestionInfo getNextQuestion(@RequestParam Integer playerGameId) {
+        return gameplayService.getNextQuestion(playerGameId);
+
     }
 
     @PostMapping("/game-answer")
-    public void addPlayerAnswer(@RequestBody PlayerAnswerRequest playerAnswerRequest) {
-        gameplayService.addPlayerAnswer(playerAnswerRequest);
+    @Operation(summary = "Alusta vastamisega.")
+    public void startPlayerAnswer(@RequestBody StartAnswerRequest startAnswerRequest) {
+        gameplayService.startPlayerAnswer(startAnswerRequest);
+
+    }
+
+    @PatchMapping("/game-answer")
+    public void submitPlayerAnswer(@RequestBody StartAnswerRequest startAnswerRequest) {
+        gameplayService.startPlayerAnswer(startAnswerRequest);
 
     }
 }

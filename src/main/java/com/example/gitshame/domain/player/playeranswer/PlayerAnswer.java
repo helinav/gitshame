@@ -29,17 +29,17 @@ public class PlayerAnswer {
     @JoinColumn(name = "answer_id")
     private Answer answer;
 
-    @NotNull
-    @Column(name = "is_correct", nullable = false)
-    private Boolean isCorrect = false;
+
+    @Column(name = "is_correct")
+    private Boolean isCorrect;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "player_game_id", nullable = false)
     private PlayerGame playerGame;
 
-    @NotNull
-    @Column(name = "start_time", nullable = false)
+
+    @Column(name = "start_time")
     private Instant startTime;
 
     @Column(name = "end_time")

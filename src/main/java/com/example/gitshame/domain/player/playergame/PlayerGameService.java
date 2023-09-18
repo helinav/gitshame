@@ -10,7 +10,7 @@ public class PlayerGameService {
     PlayerGameRepository playerGameRepository;
 
 
-    public void saveGameplay(PlayerGame playerGame) {
+    public void savePlayerGame(PlayerGame playerGame) {
         playerGameRepository.save(playerGame);
     }
 }

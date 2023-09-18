@@ -15,11 +15,7 @@ import java.time.Instant;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PlayerAnswerRequest implements Serializable {
+public class StartAnswerRequest implements Serializable {
     private Integer questionId;
-    private Integer answerId;
     private Integer playerGameId;
-    @NotNull
-    private Instant startTime;
-    private Instant endTime;
 }

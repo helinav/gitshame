@@ -1,8 +1,7 @@
 package com.example.gitshame.business.gameplay;
 
-import com.example.gitshame.business.gameplay.dto.PlayerAnswerRequest;
-import com.example.gitshame.business.gameplay.dto.PlayerGameRequest;
-import com.example.gitshame.domain.answer.Answer;
+import com.example.gitshame.business.gameplay.dto.NewGameRequest;
+import com.example.gitshame.business.gameplay.dto.StartAnswerRequest;
 import com.example.gitshame.domain.answer.AnswerService;
 import com.example.gitshame.domain.game.Game;
 import com.example.gitshame.domain.game.GameService;
@@ -10,63 +9,88 @@ import com.example.gitshame.domain.player.Player;
 import com.example.gitshame.domain.player.PlayerService;
 import com.example.gitshame.domain.player.playeranswer.PlayerAnswer;
 import com.example.gitshame.domain.player.playeranswer.PlayerAnswerMapper;
+import com.example.gitshame.domain.player.playeranswer.PlayerAnswerService;
 import com.example.gitshame.domain.player.playergame.PlayerGame;
 import com.example.gitshame.domain.player.playergame.PlayerGameMapper;
 import com.example.gitshame.domain.player.playergame.PlayerGameService;
 import com.example.gitshame.domain.question.Question;
+import com.example.gitshame.domain.question.QuestionInfo;
+import com.example.gitshame.domain.question.QuestionMapper;
 import com.example.gitshame.domain.question.QuestionService;
+import com.example.gitshame.util.TimeConverter;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class GameplayService {
     @Resource
-    GameService gameService;
+    private GameService gameService;
     @Resource
-    PlayerGameMapper playerGameMapper;
+    private PlayerGameMapper playerGameMapper;
     @Resource
-    PlayerGameService playerGameService;
+    private PlayerGameService playerGameService;
     @Resource
-    PlayerService playerService;
+    private PlayerService playerService;
     @Resource
-    PlayerAnswerMapper playerAnswerMapper;
+    private PlayerAnswerMapper playerAnswerMapper;
     @Resource
-    AnswerService answerService;
+    private AnswerService answerService;
     @Resource
-    QuestionService questionService;
+    private QuestionService questionService;
+    @Resource
+    private PlayerAnswerService playerAnswerService;
+    @Resource
+    private QuestionMapper questionMapper;
 
-    public void addGameplay(PlayerGameRequest request) {
+    public PlayerGame startNewGame(NewGameRequest request) {
+        Integer gameId = request.getGameId();
         PlayerGame playerGame = playerGameMapper.toPlayerGame((request));
-        getAndSetGame(request, playerGame);
-        getAndSetPlayer(request, playerGame);
-        playerGameService.saveGameplay(playerGame);
+        getAndSetGame(gameId, playerGame);
+        getAndSetPlayer(request.getPlayerId(), playerGame);
+        playerGameService.savePlayerGame(playerGame);
+        List<Question> questions = questionService.findAllActiveQuestionsBy(gameId);
+        List<PlayerAnswer> playerAnswers = new ArrayList<>();
+        for (Question question : questions) {
+            PlayerAnswer playerAnswer = new PlayerAnswer();
+            playerAnswer.setPlayerGame(playerGame);
+            playerAnswer.setQuestion(question);
+            playerAnswers.add(playerAnswer);
+        }
+        playerAnswerService.savePlayerAnswers(playerAnswers);
+
+        return playerGame;
     }
 
-    public void addPlayerAnswer(PlayerAnswerRequest playerAnswerRequest) {
-        PlayerAnswer playerAnswer = playerAnswerMapper.toPlayerAnswer(playerAnswerRequest);
-        getAndSetAnswer(playerAnswerRequest, playerAnswer);
-        getAndSetQuestion(playerAnswerRequest, playerAnswer);
-        
+    public void startPlayerAnswer(StartAnswerRequest startAnswerRequest) {
+        PlayerAnswer playerAnswer = playerAnswerMapper.toPlayerAnswer(startAnswerRequest);
+        getAndSetQuestion(startAnswerRequest, playerAnswer);
 
     }
 
-    private void getAndSetGame(PlayerGameRequest request, PlayerGame playerGame) {
-        Game game = gameService.getGame(request.getGameId());
+    private void getAndSetGame(Integer gameId, PlayerGame playerGame) {
+        Game game = gameService.getGame(gameId);
         playerGame.setGame(game);
     }
 
-    private void getAndSetPlayer(PlayerGameRequest request, PlayerGame playerGame) {
-        Player player = playerService.getPlayerById(request.getPlayerId());
+    private void getAndSetPlayer(Integer playerId, PlayerGame playerGame) {
+        Player player = playerService.getPlayerById(playerId);
         playerGame.setPlayer(player);
     }
 
-    private void getAndSetAnswer(PlayerAnswerRequest playerAnswerRequest, PlayerAnswer playerAnswer) {
-        Answer answer = answerService.getAnswer(playerAnswerRequest.getAnswerId());
-        playerAnswer.setAnswer(answer);
+
+    private void getAndSetQuestion(StartAnswerRequest startAnswerRequest, PlayerAnswer playerAnswer) {
+        Question question = questionService.getQuestion(startAnswerRequest.getQuestionId());
+        playerAnswer.setQuestion(question);
     }
 
-    private void getAndSetQuestion(PlayerAnswerRequest playerAnswerRequest, PlayerAnswer playerAnswer) {
-        Question question = questionService.getQuestion(playerAnswerRequest.getQuestionId());
-        playerAnswer.setQuestion(question);
+    public QuestionInfo getNextQuestion(Integer playerGameId) {
+        PlayerAnswer nextPlayerAnswer = playerAnswerService.getNextPlayerAnswerBy(playerGameId);
+        nextPlayerAnswer.setStartTime(TimeConverter.getEstonianTimeZoneInstant());
+        playerAnswerService.savePlayerAnswer(nextPlayerAnswer);
+       return questionMapper.toQuestionInfo(nextPlayerAnswer.getQuestion());
+
     }
 }

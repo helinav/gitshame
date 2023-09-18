@@ -42,9 +42,9 @@ CREATE TABLE player_answer (
                                 id serial  NOT NULL,
                                 question_id int  NOT NULL,
                                 answer_id int  NULL,
-                                is_correct boolean  NOT NULL,
+                                is_correct boolean NULL,
                                 player_game_id int  NOT NULL,
-                                start_time timestamp  NOT NULL,
+                                start_time timestamp  NULL,
                                 end_time timestamp  NULL,
                                 CONSTRAINT player_answer_pk PRIMARY KEY (id)
 );
@@ -68,6 +68,7 @@ CREATE TABLE question (
                           type_id int  NOT NULL,
                           game_id int  NOT NULL,
                           image_id int  NULL,
+                          status char(1)  NOT NULL,
                           text varchar(255)  NOT NULL,
                           answer_explanation varchar(700)  NOT NULL,
                           time_limit int  NOT NULL,

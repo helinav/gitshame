@@ -15,16 +15,7 @@ import java.time.Instant;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PlayerGameRequest implements Serializable {
+public class NewGameRequest implements Serializable {
     private Integer gameId;
     private Integer playerId;
-    @NotNull
-    private Integer score;
-    @NotNull
-    private String status;
-    @NotNull
-    private Instant startTime;
-    private Instant endTime;
-    @NotNull
-    private Integer strikeCount;
 }

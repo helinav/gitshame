@@ -23,6 +23,10 @@ public class Question {
     @Column(name = "text", nullable = false)
     private String text;
 
+    @NotNull
+    @Column(name = "status", nullable = false, length = Integer.MAX_VALUE)
+    private String status;
+
     @Size(max = 255)
     @NotNull
     @Column(name = "answer_explanation", nullable = false)
@@ -45,5 +49,7 @@ public class Question {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "image_id")
     private Image image;
+
+
 
 }

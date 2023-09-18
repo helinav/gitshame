@@ -21,4 +21,7 @@ public class PlayerService {
     public Player getPlayer(Integer id) {
         return playerRepository.getPlayerBy(id);
     }
+    public Player getPlayerById(Integer playerId) {
+        return playerRepository.getReferenceById(playerId);
+    }
 }

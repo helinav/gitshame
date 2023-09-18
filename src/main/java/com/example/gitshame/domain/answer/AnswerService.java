@@ -12,4 +12,8 @@ public class AnswerService {
     public void saveAnswer(Answer answer) {
         answerRepository.save(answer);
     }
+
+    public Answer getAnswer(Integer answerId) {
+        return answerRepository.getReferenceById(answerId);
+    }
 }

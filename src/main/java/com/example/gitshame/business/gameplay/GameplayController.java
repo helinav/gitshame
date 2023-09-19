@@ -1,14 +1,13 @@
 package com.example.gitshame.business.gameplay;
 
 
-import com.example.gitshame.business.gameplay.dto.NewGameRequest;
-import com.example.gitshame.business.gameplay.dto.PlayerGameDto;
-import com.example.gitshame.business.gameplay.dto.StartAnswerRequest;
+import com.example.gitshame.business.gameplay.dto.*;
 import com.example.gitshame.domain.question.QuestionInfo;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.annotation.Resource;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 @RestController
@@ -36,15 +35,21 @@ public class GameplayController {
     }
 
     @GetMapping("/answers/select")
-    @Operation(summary = "Toob ära vastused vastavalt küsimusetüübile", description = "Tagastab JSONi vastavalt küsimusetüübile")
-    public ResponseEntity<?> getSelectAnswers(@RequestParam Integer questionId) {
-        return gameplayService.getAnswers(questionId);
+    @Operation(summary = "Toob ära select-küsimusetüüpide vastused.", description = "Tagastab JSONi vastavalt küsimusetüübile")
+    public List<SelectResponse> getSelectAnswers(@RequestParam Integer questionId) {
+        return gameplayService.getSelectAnswers(questionId);
     }
 
     @GetMapping("/answers/sequence")
-    @Operation(summary = "Toob ära vastused vastavalt küsimusetüübile", description = "Tagastab JSONi vastavalt küsimusetüübile")
-    public ResponseEntity<?> getAnswers(@RequestParam Integer questionId) {
-        return gameplayService.getAnswers(questionId);
+    @Operation(summary = "Toob ära sequence küsimusetüübi vastused", description = "Tagastab JSONi vastavalt küsimusetüübile")
+    public List<SequenceResponse> getSequenceAnswers(@RequestParam Integer questionId) {
+        return gameplayService.getSequenceAnswers(questionId);
+    }
+
+    @GetMapping("/answers/textbox")
+    @Operation(summary = "Toob ära textboxi küsimusetüübi vastused", description = "Tagastab JSONi vastavalt küsimusetüübile")
+    public TextBoxResponse getTextBoxAnswer(@RequestParam Integer questionId) {
+        return gameplayService.getTextBoxAnswer(questionId);
     }
 }
 

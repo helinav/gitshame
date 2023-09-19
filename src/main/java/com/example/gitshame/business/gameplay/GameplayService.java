@@ -15,19 +15,15 @@ import com.example.gitshame.domain.player.playergame.PlayerGame;
 import com.example.gitshame.domain.player.playergame.PlayerGameMapper;
 import com.example.gitshame.domain.player.playergame.PlayerGameService;
 import com.example.gitshame.domain.question.*;
-import com.example.gitshame.infrastructure.exception.DataNotFoundException;
 import com.example.gitshame.util.TimeConverter;
 import jakarta.annotation.Resource;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import static com.example.gitshame.business.Status.NEXT_QUESTION;
 import static com.example.gitshame.business.Status.PENDING_QUESTION;
-import static com.example.gitshame.validation.Error.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class GameplayService {
@@ -55,7 +51,6 @@ public class GameplayService {
     @Resource
     private AnswerMapper answerMapper;
 
-
     public PlayerGameDto startNewGame(NewGameRequest request) {
         Integer gameId = request.getGameId();
         PlayerGame playerGame = playerGameMapper.toPlayerGame((request));
@@ -76,7 +71,7 @@ public class GameplayService {
     }
 
     public QuestionInfo getNextQuestion(Integer playerGameId) {
-       PlayerAnswer nextPlayerAnswer = playerAnswerService.getNextValidPlayerAnswerBy(playerGameId);
+        PlayerAnswer nextPlayerAnswer = playerAnswerService.getNextValidPlayerAnswerBy(playerGameId);
         if (NEXT_QUESTION.getLetter().equals(nextPlayerAnswer.getStatus())) {
             nextPlayerAnswer.setStartTime(TimeConverter.getEstonianTimeZoneInstant());
             nextPlayerAnswer.setStatus(PENDING_QUESTION.getLetter());
@@ -100,45 +95,39 @@ public class GameplayService {
         playerGame.setPlayer(player);
     }
 
-
     private void getAndSetQuestion(StartAnswerRequest startAnswerRequest, PlayerAnswer playerAnswer) {
         Question question = questionService.getQuestion(startAnswerRequest.getQuestionId());
         playerAnswer.setQuestion(question);
     }
 
-
-    public ResponseEntity<?> getAnswers(Integer questionId) {
-
-        Optional<Question> optionalQuestion = questionRepository.findById(questionId);
-
-        if (optionalQuestion.isEmpty()) {
-            throw new DataNotFoundException(INVALID_QUESTION_ID.getMessage(), INVALID_QUESTION_ID.getErrorCode());
-        }
-        String questionType = optionalQuestion.get().getType().getName();
-
-        switch (questionType) {
-            case "radio": {
-                List<Answer> answers = answerService.getAnswers(questionId);
-                List<SelectResponse> selectRespons = answerMapper.toRadioResponses(answers);
-                return ResponseEntity.ok(selectRespons);
-            }
-            case "checkbox": {
-                List<Answer> answers = answerService.getAnswers(questionId);
-                List<CheckboxResponse> checkboxResponses = answerMapper.toCheckboxResponses(answers);
-                return ResponseEntity.ok(checkboxResponses);
-            }
-            case "textbox": {
-                Answer answer = answerService.getAnswer(questionId);
-                TextBoxResponse textboxResponse = answerMapper.toTextBoxResponse(answer);
-                return ResponseEntity.ok(textboxResponse);
-            }
-            case "sequence": {
-                List<Answer> answers = answerService.getAnswers(questionId);
-                List<SequenceResponse> sequenceResponses = answerMapper.toSequenceResponses(answers);
-                return ResponseEntity.ok(sequenceResponses);
-            }
-        };
-        return null;
+    public List<SelectResponse> getSelectAnswers(Integer questionId) {
+        List<Answer> answers = answerService.getAnswers(questionId);
+        return answerMapper.toSelectResponse(answers);
     }
 
+    public List<SequenceResponse> getSequenceAnswers(Integer questionId) {
+        List<Answer> answers = answerService.getAnswers(questionId);
+        return answerMapper.toSequenceResponses(answers);
+
+    }
+
+    public TextBoxResponse getTextBoxAnswer(Integer questionId) {
+        Answer answer = answerService.getAnswer(questionId);
+        return answerMapper.toTextBoxResponse(answer);
+    }
 }
+//            case"textbox":{
+//                    Answer answer=answerService.getAnswer(questionId);
+//                    TextBoxResponse textboxResponse=answerMapper.toTextBoxResponse(answer);
+//                    return ResponseEntity.ok(textboxResponse);
+//                    }
+//                    case"sequence":{
+//                    List<Answer> answers=answerService.getAnswers(questionId);
+//        List<SequenceResponse> sequenceResponses=answerMapper.toSequenceResponses(answers);
+//        return ResponseEntity.ok(sequenceResponses);
+//        }
+//        };
+//        return null;
+//        }
+//
+//        }

@@ -7,10 +7,16 @@ import java.util.List;
 
 public interface AnswerRepository extends JpaRepository<Answer, Integer> {
     @Query("select a from Answer a where a.question.id = ?1")
-    List<Answer> answersByQuestion(Integer id);
+    List<Answer> getAnswersBy(Integer id);
 
     @Query("select a from Answer a where a.question.id = ?1")
-    Answer answerByQuestion(Integer id);
+    Answer getAnswerBy(Integer id);
+
+
+
+
+//    @Query("select a from Answer a where a.question.id = ?1")
+//    Answer answerByQuestion(Integer id);
 
 
 }

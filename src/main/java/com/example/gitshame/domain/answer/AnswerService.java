@@ -16,11 +16,11 @@ public class AnswerService {
     }
 
     public List<Answer> getAnswers(Integer questionId) {
-        return answerRepository.answersByQuestion(questionId);
+        return answerRepository.getAnswersBy(questionId);
 
     }
 
     public Answer getAnswer(Integer questionId) {
-        return answerRepository.answerByQuestion(questionId);
+        return answerRepository.getAnswerBy(questionId);
     }
 }

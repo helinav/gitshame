@@ -1,6 +1,7 @@
 package com.example.gitshame.business.gameplay;
 
 import com.example.gitshame.business.gameplay.dto.NewGameRequest;
+import com.example.gitshame.business.gameplay.dto.PlayerGameDto;
 import com.example.gitshame.business.gameplay.dto.StartAnswerRequest;
 import com.example.gitshame.domain.answer.AnswerService;
 import com.example.gitshame.domain.game.Game;
@@ -45,7 +46,7 @@ public class GameplayService {
     @Resource
     private QuestionMapper questionMapper;
 
-    public PlayerGame startNewGame(NewGameRequest request) {
+    public PlayerGameDto startNewGame(NewGameRequest request) {
         Integer gameId = request.getGameId();
         PlayerGame playerGame = playerGameMapper.toPlayerGame((request));
         getAndSetGame(gameId, playerGame);
@@ -60,9 +61,7 @@ public class GameplayService {
             playerAnswers.add(playerAnswer);
         }
         playerAnswerService.savePlayerAnswers(playerAnswers);
-
-
-        return playerGame;
+        return playerGameMapper.toPlayerGameDto(playerGame);
     }
 
     public QuestionInfo getNextQuestion(Integer playerGameId) {
@@ -70,13 +69,11 @@ public class GameplayService {
         nextPlayerAnswer.setStartTime(TimeConverter.getEstonianTimeZoneInstant());
         playerAnswerService.savePlayerAnswer(nextPlayerAnswer);
         return questionMapper.toQuestionInfo(nextPlayerAnswer.getQuestion());
-
     }
 
     public void startPlayerAnswer(StartAnswerRequest startAnswerRequest) {
         PlayerAnswer playerAnswer = playerAnswerMapper.toPlayerAnswer(startAnswerRequest);
         getAndSetQuestion(startAnswerRequest, playerAnswer);
-
     }
 
     private void getAndSetGame(Integer gameId, PlayerGame playerGame) {

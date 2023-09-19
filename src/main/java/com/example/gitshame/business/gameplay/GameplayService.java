@@ -61,7 +61,16 @@ public class GameplayService {
         }
         playerAnswerService.savePlayerAnswers(playerAnswers);
 
+
         return playerGame;
+    }
+
+    public QuestionInfo getNextQuestion(Integer playerGameId) {
+        PlayerAnswer nextPlayerAnswer = playerAnswerService.getNextPlayerAnswerBy(playerGameId);
+        nextPlayerAnswer.setStartTime(TimeConverter.getEstonianTimeZoneInstant());
+        playerAnswerService.savePlayerAnswer(nextPlayerAnswer);
+        return questionMapper.toQuestionInfo(nextPlayerAnswer.getQuestion());
+
     }
 
     public void startPlayerAnswer(StartAnswerRequest startAnswerRequest) {
@@ -86,11 +95,5 @@ public class GameplayService {
         playerAnswer.setQuestion(question);
     }
 
-    public QuestionInfo getNextQuestion(Integer playerGameId) {
-        PlayerAnswer nextPlayerAnswer = playerAnswerService.getNextPlayerAnswerBy(playerGameId);
-        nextPlayerAnswer.setStartTime(TimeConverter.getEstonianTimeZoneInstant());
-        playerAnswerService.savePlayerAnswer(nextPlayerAnswer);
-       return questionMapper.toQuestionInfo(nextPlayerAnswer.getQuestion());
 
-    }
 }

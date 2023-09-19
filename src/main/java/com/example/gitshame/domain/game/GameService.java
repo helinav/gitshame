@@ -4,6 +4,8 @@ import com.example.gitshame.validation.ValidationService;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class GameService {
 
@@ -21,5 +23,10 @@ public class GameService {
 
     public Game getGame(Integer gameId) {
         return gameRepository.getReferenceById(gameId);
+    }
+
+    public List<Game> getGames() {
+        return gameRepository.findAll();
+
     }
 }

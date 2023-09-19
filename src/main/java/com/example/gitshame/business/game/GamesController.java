@@ -1,14 +1,10 @@
 package com.example.gitshame.business.game;
-import com.example.gitshame.business.game.dto.AnswerRequest;
-import com.example.gitshame.business.game.dto.GameResponse;
-import com.example.gitshame.business.game.dto.QuestionRequest;
-import com.example.gitshame.business.game.dto.QuestionResponse;
+import com.example.gitshame.business.game.dto.*;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.annotation.Resource;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 public class GamesController {
@@ -32,5 +28,13 @@ public class GamesController {
     @Operation(summary = "Uue vastuse lisamine.")
     public void addAnswer(@RequestParam Integer questionId, @RequestBody AnswerRequest request) {
         gamesService.addAnswer(questionId, request);
+    }
+
+    @GetMapping("/play")
+    @Operation(summary = "Toob ära kõik olemasolevad mängud.",
+    description = "Tagastab gameId ja gameName.")
+    public List<GameDto> getGames() {
+        return gamesService.getGames();
+
     }
 }

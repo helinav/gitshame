@@ -14,6 +14,8 @@ import com.example.gitshame.domain.question.*;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class GamesService {
     @Resource
@@ -116,4 +118,9 @@ public class GamesService {
         answer.setQuestion(question);
     }
 
+    public List<GameDto> getGames() {
+        List<Game> games = gameService.getGames();
+        return gameMapper.toGameDtos(games);
+
+    }
 }

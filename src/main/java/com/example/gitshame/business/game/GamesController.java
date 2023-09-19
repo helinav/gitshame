@@ -30,7 +30,7 @@ public class GamesController {
         gamesService.addAnswer(questionId, request);
     }
 
-    @GetMapping("/play")
+    @GetMapping("/game")
     @Operation(summary = "Toob ära kõik olemasolevad mängud.",
     description = "Tagastab gameId ja gameName.")
     public List<GameDto> getGames() {

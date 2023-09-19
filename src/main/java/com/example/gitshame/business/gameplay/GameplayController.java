@@ -7,6 +7,7 @@ import com.example.gitshame.business.gameplay.dto.StartAnswerRequest;
 import com.example.gitshame.domain.question.QuestionInfo;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.annotation.Resource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -32,10 +33,20 @@ public class GameplayController {
         gameplayService.startPlayerAnswer(startAnswerRequest);
 
         //todo: sellest tuleb siis update
+    }
 
+    @GetMapping("/answers/select")
+    @Operation(summary = "Toob ära vastused vastavalt küsimusetüübile", description = "Tagastab JSONi vastavalt küsimusetüübile")
+    public ResponseEntity<?> getSelectAnswers(@RequestParam Integer questionId) {
+        return gameplayService.getAnswers(questionId);
+    }
+
+    @GetMapping("/answers/sequence")
+    @Operation(summary = "Toob ära vastused vastavalt küsimusetüübile", description = "Tagastab JSONi vastavalt küsimusetüübile")
+    public ResponseEntity<?> getAnswers(@RequestParam Integer questionId) {
+        return gameplayService.getAnswers(questionId);
     }
 }
-
 
 
 

@@ -1,9 +1,11 @@
 package com.example.gitshame.domain.player.playeranswer;
 
+import com.example.gitshame.business.Status;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PlayerAnswerService {
@@ -14,8 +16,13 @@ public class PlayerAnswerService {
         playerAnswerRepository.saveAll(playerAnswers);
     }
 
-    public PlayerAnswer getNextPlayerAnswerBy(Integer playerGameId) {
-        return playerAnswerRepository.getNextPlayerAnswerBy(playerGameId);
+    public PlayerAnswer getNextValidPlayerAnswerBy(Integer playerGameId) {
+        Optional<PlayerAnswer> optionalPlayerAnswer = playerAnswerRepository.findPlayerAnswerBy(playerGameId, Status.PENDING_QUESTION.getLetter());
+        if (optionalPlayerAnswer.isPresent()) {
+            return optionalPlayerAnswer.get();
+        }
+
+        return playerAnswerRepository.getFirstPlayerAnswerBy(playerGameId, Status.NEXT_QUESTION.getLetter());
 
     }
 

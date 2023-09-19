@@ -10,7 +10,11 @@ public enum Error {
 
     EMAIL_ALREADY_EXISTS ("Sellise emaili aadressiga on juba aktiivne kasutaja",223),
 
-    GAME_NAME_ALREADY_EXISTS ("Sellise nimega mäng on juba olemas", 333);
+    GAME_NAME_ALREADY_EXISTS ("Sellise nimega mäng on juba olemas", 333),
+
+    INVALID_QUESTION_ID("Vale questionId", 444);
+
+
 
     private final String message;
     private final int errorCode;

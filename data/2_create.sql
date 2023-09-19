@@ -44,6 +44,7 @@ CREATE TABLE player_answer (
                                 answer_id int  NULL,
                                 is_correct boolean NULL,
                                 player_game_id int  NOT NULL,
+                                status char(1)  NOT NULL,
                                 start_time timestamp  NULL,
                                 end_time timestamp  NULL,
                                 CONSTRAINT player_answer_pk PRIMARY KEY (id)

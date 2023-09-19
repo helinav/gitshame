@@ -38,6 +38,9 @@ public class PlayerAnswer {
     @JoinColumn(name = "player_game_id", nullable = false)
     private PlayerGame playerGame;
 
+    @NotNull
+    @Column(name = "status", nullable = false, length = Integer.MAX_VALUE)
+    private String status;
 
     @Column(name = "start_time")
     private Instant startTime;

@@ -3,6 +3,8 @@ package com.example.gitshame.domain.answer;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class AnswerService {
 
@@ -13,7 +15,12 @@ public class AnswerService {
         answerRepository.save(answer);
     }
 
-    public Answer getAnswer(Integer answerId) {
-        return answerRepository.getReferenceById(answerId);
+    public List<Answer> getAnswers(Integer questionId) {
+        return answerRepository.answersByQuestion(questionId);
+
+    }
+
+    public Answer getAnswer(Integer questionId) {
+        return answerRepository.answerByQuestion(questionId);
     }
 }

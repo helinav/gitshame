@@ -12,5 +12,7 @@ public interface GameMapper {
     @Mapping(source = "id", target = "gameId")
     GameResponse toGameResponse(Game game);
 
+    @Mapping(source = "id", target = "gameId")
+    GameDto toGameDto(Game game);
     List <GameDto> toGameDtos(List<Game> games);
 }

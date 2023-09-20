@@ -97,10 +97,6 @@ public class GameplayService {
         return questionInfo;
     }
 
-    public void startPlayerAnswer(StartAnswerRequest startAnswerRequest) {
-        PlayerAnswer playerAnswer = playerAnswerMapper.toPlayerAnswer(startAnswerRequest);
-        getAndSetQuestion(startAnswerRequest, playerAnswer);
-    }
 
     public List<SelectResponse> getSelectAnswers(Integer questionId) {
         List<Answer> answers = answerService.getAnswers(questionId);
@@ -132,8 +128,4 @@ public class GameplayService {
         playerGame.setPlayer(player);
     }
 
-    private void getAndSetQuestion(StartAnswerRequest startAnswerRequest, PlayerAnswer playerAnswer) {
-        Question question = questionService.getQuestion(startAnswerRequest.getQuestionId());
-        playerAnswer.setQuestion(question);
-    }
 }

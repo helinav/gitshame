@@ -149,14 +149,17 @@ VALUES (DEFAULT, 9, 'Kiirendatud tempos koodi loomine, eesmärgiga olla esimene 
 INSERT INTO public.answer (id, question_id, text, is_correct, sequence)
 VALUES (DEFAULT, 10, 'Duke', true, null);
 
+INSERT INTO public.player_game (id, game_id, player_id, score, status, start_time, end_time, strike_count) VALUES (DEFAULT, 1, 1, 0, 'A', '2023-09-20 10:11:43.100666', null, 0);
 
-INSERT INTO public.player_answer (id, question_id, answer_id, is_correct, player_game_id, status, start_time, end_time) VALUES (default, 4, null, null, 1, 'N', null, null);
-INSERT INTO public.player_answer (id, question_id, answer_id, is_correct, player_game_id, status, start_time, end_time) VALUES (default, 5, null, null, 1, 'N', null, null);
-INSERT INTO public.player_answer (id, question_id, answer_id, is_correct, player_game_id, status, start_time, end_time) VALUES (default, 6, null, null, 1, 'N', null, null);
-INSERT INTO public.player_answer (id, question_id, answer_id, is_correct, player_game_id, status, start_time, end_time) VALUES (default, 7, null, null, 1, 'N', null, null);
-INSERT INTO public.player_answer (id, question_id, answer_id, is_correct, player_game_id, status, start_time, end_time) VALUES (default, 8, null, null, 1, 'N', null, null);
-INSERT INTO public.player_answer (id, question_id, answer_id, is_correct, player_game_id, status, start_time, end_time) VALUES (default, 9, null, null, 1, 'N', null, null);
-INSERT INTO public.player_answer (id, question_id, answer_id, is_correct, player_game_id, status, start_time, end_time) VALUES (default, 10, null, null, 1, 'N', null, null);
-INSERT INTO public.player_answer (id, question_id, answer_id, is_correct, player_game_id, status, start_time, end_time) VALUES (default, 2, null, null, 1, 'N', null, null);
-INSERT INTO public.player_answer (id, question_id, answer_id, is_correct, player_game_id, status, start_time, end_time) VALUES (default, 3, null, null, 1, 'N', null, null);
-INSERT INTO public.player_answer (id, question_id, answer_id, is_correct, player_game_id, status, start_time, end_time) VALUES (default, 1, null, null, 1, 'N', null, null);
+
+
+INSERT INTO public.player_answer (id, question_id, answer_id, is_correct, player_game_id, status, start_time, end_time) VALUES (DEFAULT, 4, null, null, 1, 'N', null, null);
+INSERT INTO public.player_answer (id, question_id, answer_id, is_correct, player_game_id, status, start_time, end_time) VALUES (DEFAULT, 5, null, null, 1, 'N', null, null);
+INSERT INTO public.player_answer (id, question_id, answer_id, is_correct, player_game_id, status, start_time, end_time) VALUES (DEFAULT, 6, null, null, 1, 'N', null, null);
+INSERT INTO public.player_answer (id, question_id, answer_id, is_correct, player_game_id, status, start_time, end_time) VALUES (DEFAULT, 7, null, null, 1, 'N', null, null);
+INSERT INTO public.player_answer (id, question_id, answer_id, is_correct, player_game_id, status, start_time, end_time) VALUES (DEFAULT, 8, null, null, 1, 'N', null, null);
+INSERT INTO public.player_answer (id, question_id, answer_id, is_correct, player_game_id, status, start_time, end_time) VALUES (DEFAULT, 9, null, null, 1, 'N', null, null);
+INSERT INTO public.player_answer (id, question_id, answer_id, is_correct, player_game_id, status, start_time, end_time) VALUES (DEFAULT, 10, null, null, 1, 'N', null, null);
+INSERT INTO public.player_answer (id, question_id, answer_id, is_correct, player_game_id, status, start_time, end_time) VALUES (DEFAULT, 2, null, null, 1, 'N', null, null);
+INSERT INTO public.player_answer (id, question_id, answer_id, is_correct, player_game_id, status, start_time, end_time) VALUES (DEFAULT, 3, null, null, 1, 'N', null, null);
+INSERT INTO public.player_answer (id, question_id, answer_id, is_correct, player_game_id, status, start_time, end_time) VALUES (DEFAULT, 1, null, null, 1, 'N', null, null);

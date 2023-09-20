@@ -10,8 +10,15 @@ public interface PlayerAnswerRepository extends JpaRepository<com.example.gitsha
     Optional<PlayerAnswer> findPlayerAnswerBy(Integer playerGameId, String status);
 
 
-
     @Query("select p from PlayerAnswer p where p.playerGame.id = ?1 and p.status = ?2 order by p.id limit 1")
     PlayerAnswer getFirstPlayerAnswerBy(Integer playerGameId, String status);
+
+    @Query("select count(p) from PlayerAnswer p where p.playerGame.id = ?1")
+    long countPlayerAnswersBy(Integer playerGameId);
+
+    @Query("select count(p) from PlayerAnswer p where p.playerGame.id = ?1 and p.status = ?2")
+    long countPlayerAnswersBy(Integer playerGameId, String status);
+
+
 
 }

@@ -71,13 +71,30 @@ public class GameplayService {
     }
 
     public QuestionInfo getNextQuestion(Integer playerGameId) {
+        long totalNumberOfQuestions = playerAnswerService.getTotalNumberOfQuestions(playerGameId);
+        long numberOfQuestionsCompleted = playerAnswerService.getNumberOfQuestionsCompleted(playerGameId);
+        Boolean isGameOver = totalNumberOfQuestions == numberOfQuestionsCompleted;
+        if (isGameOver) {
+            return new QuestionInfo(isGameOver);
+        }
+
         PlayerAnswer nextPlayerAnswer = playerAnswerService.getNextValidPlayerAnswerBy(playerGameId);
         if (NEXT_QUESTION.getLetter().equals(nextPlayerAnswer.getStatus())) {
             nextPlayerAnswer.setStartTime(TimeConverter.getEstonianTimeZoneInstant());
             nextPlayerAnswer.setStatus(PENDING_QUESTION.getLetter());
             playerAnswerService.savePlayerAnswer(nextPlayerAnswer);
         }
-        return questionMapper.toQuestionInfo(nextPlayerAnswer.getQuestion());
+
+        long nextQuestionNumber = playerAnswerService.getNextQuestionNumber(playerGameId);
+
+        QuestionInfo questionInfo = questionMapper.toQuestionInfo(nextPlayerAnswer.getQuestion());
+        questionInfo.setStrikeCount(nextPlayerAnswer.getPlayerGame().getStrikeCount());
+        questionInfo.setTotalNumberOfQuestions(totalNumberOfQuestions);
+        questionInfo.setQuestionNumber(nextQuestionNumber);
+        questionInfo.setIsGameOver(isGameOver);
+
+
+        return questionInfo;
     }
 
     public void startPlayerAnswer(StartAnswerRequest startAnswerRequest) {

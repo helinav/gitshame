@@ -16,20 +16,17 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class QuestionInfo implements Serializable {
     private Integer questionId;
-    @NotNull
-    @Size(max = 255)
     private String questionText;
-    @NotNull
-    @Size(max = 255)
     private String answerExplanation;
     private String typeName;
     private String imageData;
-
     private Integer strikeCount;
-    private Integer questionNumber;
-    private Integer totalNumberOfQuestions;
+    private Long questionNumber;
+    private Long totalNumberOfQuestions;
+    private Boolean isGameOver;
 
 
-
-
+    public QuestionInfo(Boolean isGameOver) {
+        this.isGameOver = isGameOver;
+    }
 }

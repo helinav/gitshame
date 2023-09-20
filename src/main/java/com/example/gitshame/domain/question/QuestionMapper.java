@@ -2,6 +2,7 @@ package com.example.gitshame.domain.question;
 
 import com.example.gitshame.business.game.dto.QuestionRequest;
 import com.example.gitshame.business.game.dto.QuestionResponse;
+import com.example.gitshame.business.gameplay.dto.QuestionInfo;
 import com.example.gitshame.util.ImageConverter;
 import org.mapstruct.*;
 

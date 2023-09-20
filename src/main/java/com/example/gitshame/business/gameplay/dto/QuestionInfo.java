@@ -1,5 +1,6 @@
-package com.example.gitshame.domain.question;
+package com.example.gitshame.business.gameplay.dto;
 
+import com.example.gitshame.domain.question.Question;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;

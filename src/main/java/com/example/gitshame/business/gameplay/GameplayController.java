@@ -2,7 +2,7 @@ package com.example.gitshame.business.gameplay;
 
 
 import com.example.gitshame.business.gameplay.dto.*;
-import com.example.gitshame.domain.question.QuestionInfo;
+import com.example.gitshame.business.gameplay.dto.QuestionInfo;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;

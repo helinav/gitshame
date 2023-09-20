@@ -51,6 +51,12 @@ public class GameplayController {
     public TextBoxResponse getTextBoxAnswer(@RequestParam Integer questionId) {
         return gameplayService.getTextBoxAnswer(questionId);
     }
+
+    @GetMapping("/leaderboard")
+    @Operation(summary = "Toob ära valitud mängu top5 parimat skoori")
+    public List<LeaderboardResponse> getLeaderboardInfo(@RequestParam Integer gameId) {
+        return gameplayService.getLeaderboardInfo(gameId);
+    }
 }
 
 

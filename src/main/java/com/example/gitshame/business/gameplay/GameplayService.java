@@ -102,6 +102,26 @@ public class GameplayService {
         getAndSetQuestion(startAnswerRequest, playerAnswer);
     }
 
+    public List<SelectResponse> getSelectAnswers(Integer questionId) {
+        List<Answer> answers = answerService.getAnswers(questionId);
+        return answerMapper.toSelectResponse(answers);
+    }
+
+    public List<SequenceResponse> getSequenceAnswers(Integer questionId) {
+        List<Answer> answers = answerService.getAnswers(questionId);
+        return answerMapper.toSequenceResponses(answers);
+    }
+
+    public TextBoxResponse getTextBoxAnswer(Integer questionId) {
+        Answer answer = answerService.getAnswer(questionId);
+        return answerMapper.toTextBoxResponse(answer);
+    }
+
+    public List<LeaderboardResponse> getLeaderboardInfo(Integer gameId) {
+        List<PlayerGame> leaderboardInfos = playerGameService.getLeaderboardInfo(gameId);
+        return playerGameMapper.toLeaderBoardResponses(leaderboardInfos);
+    }
+
     private void getAndSetGame(Integer gameId, PlayerGame playerGame) {
         Game game = gameService.getGame(gameId);
         playerGame.setGame(game);
@@ -116,35 +136,4 @@ public class GameplayService {
         Question question = questionService.getQuestion(startAnswerRequest.getQuestionId());
         playerAnswer.setQuestion(question);
     }
-
-    public List<SelectResponse> getSelectAnswers(Integer questionId) {
-        List<Answer> answers = answerService.getAnswers(questionId);
-        return answerMapper.toSelectResponse(answers);
-    }
-
-    public List<SequenceResponse> getSequenceAnswers(Integer questionId) {
-        List<Answer> answers = answerService.getAnswers(questionId);
-        return answerMapper.toSequenceResponses(answers);
-
-    }
-
-    public TextBoxResponse getTextBoxAnswer(Integer questionId) {
-        Answer answer = answerService.getAnswer(questionId);
-        return answerMapper.toTextBoxResponse(answer);
-    }
 }
-//            case"textbox":{
-//                    Answer answer=answerService.getAnswer(questionId);
-//                    TextBoxResponse textboxResponse=answerMapper.toTextBoxResponse(answer);
-//                    return ResponseEntity.ok(textboxResponse);
-//                    }
-//                    case"sequence":{
-//                    List<Answer> answers=answerService.getAnswers(questionId);
-//        List<SequenceResponse> sequenceResponses=answerMapper.toSequenceResponses(answers);
-//        return ResponseEntity.ok(sequenceResponses);
-//        }
-//        };
-//        return null;
-//        }
-//
-//        }

@@ -10,8 +10,6 @@ import com.example.gitshame.domain.game.GameService;
 import com.example.gitshame.domain.player.Player;
 import com.example.gitshame.domain.player.PlayerService;
 import com.example.gitshame.domain.player.playeranswer.PlayerAnswer;
-import com.example.gitshame.domain.player.playeranswer.PlayerAnswerMapper;
-import com.example.gitshame.domain.player.playeranswer.PlayerAnswerRepository;
 import com.example.gitshame.domain.player.playeranswer.PlayerAnswerService;
 import com.example.gitshame.domain.player.playergame.PlayerGame;
 import com.example.gitshame.domain.player.playergame.PlayerGameMapper;
@@ -32,6 +30,7 @@ import java.util.List;
 
 @Service
 public class GameplayService {
+
     @Resource
     private GameService gameService;
     @Resource
@@ -41,25 +40,15 @@ public class GameplayService {
     @Resource
     private PlayerService playerService;
     @Resource
-    private PlayerAnswerMapper playerAnswerMapper;
-
-    @Resource
     private QuestionService questionService;
     @Resource
     private PlayerAnswerService playerAnswerService;
     @Resource
     private QuestionMapper questionMapper;
     @Resource
-    private QuestionRepository questionRepository;
-    @Resource
     private AnswerService answerService;
     @Resource
     private AnswerMapper answerMapper;
-    private final PlayerAnswerRepository playerAnswerRepository;
-
-    public GameplayService(PlayerAnswerRepository playerAnswerRepository) {
-        this.playerAnswerRepository = playerAnswerRepository;
-    }
 
     public PlayerGameDto startNewGame(NewGameRequest request) {
         Integer gameId = request.getGameId();
@@ -107,7 +96,6 @@ public class GameplayService {
         return questionInfo;
     }
 
-
     public List<MultipleChoiceAnswerInfo> getSelectAnswers(Integer questionId) {
         List<Answer> answers = answerService.getAnswers(questionId);
         return answerMapper.toSelectResponse(answers);
@@ -128,22 +116,11 @@ public class GameplayService {
         return playerGameMapper.toLeaderBoardResponses(leaderboardInfos);
     }
 
-    private void getAndSetGame(Integer gameId, PlayerGame playerGame) {
-        Game game = gameService.getGame(gameId);
-        playerGame.setGame(game);
-    }
-
-    private void getAndSetPlayer(Integer playerId, PlayerGame playerGame) {
-        Player player = playerService.getPlayerById(playerId);
-        playerGame.setPlayer(player);
-    }
-
     @Transactional
-    public void submitMultipleChoicePlayerAnswer(Integer playerGameId, List<MultipleChoiceAnswerInfo> multipleChoiceAnswerInfos) {
+    public Boolean submitMultipleChoicePlayerAnswer(Integer playerGameId, List<MultipleChoiceAnswerInfo> multipleChoiceAnswerInfos) {
         Instant timestamp = TimeConverter.getEstonianTimeZoneInstant();
         PlayerGame playerGame = playerGameService.getPlayerGame(playerGameId);
         Integer playerCurrentScore = playerGame.getScore();
-
         PlayerAnswer playerAnswer = playerAnswerService.getPlayerPendingAnswerBy(playerGameId);
         playerAnswer.setEndTime(timestamp);
 
@@ -151,7 +128,7 @@ public class GameplayService {
 
         if (allAnswersAreCorrect) {
             playerAnswer.setIsCorrect(true);
-            int playerNewScore = calculatePlayerNewScore(playerAnswer,playerCurrentScore);
+            int playerNewScore = calculatePlayerNewScore(playerAnswer, playerCurrentScore);
             playerGame.setScore(playerNewScore);
 
         } else {
@@ -162,9 +139,35 @@ public class GameplayService {
         playerAnswer.setStatus(Status.COMPLETED_QUESTION.getLetter());
         playerAnswerService.savePlayerAnswer(playerAnswer);
         playerGameService.savePlayerGame(playerGame);
+        return playerAnswer.getIsCorrect();
     }
 
-    public void submitSequenceTypePlayerAnswer(Integer playerGameId, List<SequenceTypeAnswerInfo> sequenceTypeAnswerInfos) {
+    @Transactional
+    public Boolean submitTextBoxPlayerAnswer(Integer playerGameId, TextBoxAnswerInfo textBoxAnswerInfo) {
+        Instant timestamp = TimeConverter.getEstonianTimeZoneInstant();
+        PlayerGame playerGame = playerGameService.getPlayerGame(playerGameId);
+        Integer playerCurrentScore = playerGame.getScore();
+        PlayerAnswer playerAnswer = playerAnswerService.getPlayerPendingAnswerBy(playerGameId);
+        playerAnswer.setEndTime(timestamp);
+        Answer answer = answerService.getAnswerBy(textBoxAnswerInfo.getAnswerId());
+
+        if (textBoxAnswerInfo.getText().equals(answer.getText())) {
+            playerAnswer.setIsCorrect(true);
+            int playerNewScore = calculatePlayerNewScore(playerAnswer, playerCurrentScore);
+            playerGame.setScore(playerNewScore);
+
+        } else {
+            playerAnswer.setIsCorrect(false);
+            playerGame.setStrikeCount(playerGame.getStrikeCount() + 1);
+        }
+        playerAnswer.setStatus(Status.COMPLETED_QUESTION.getLetter());
+        playerAnswerService.savePlayerAnswer(playerAnswer);
+        playerGameService.savePlayerGame(playerGame);
+        return playerAnswer.getIsCorrect();
+    }
+
+    @Transactional
+    public Boolean submitSequenceTypePlayerAnswer(Integer playerGameId, List<SequenceTypeAnswerInfo> sequenceTypeAnswerInfos) {
         Instant timestamp = TimeConverter.getEstonianTimeZoneInstant();
         PlayerGame playerGame = playerGameService.getPlayerGame(playerGameId);
         Integer playerCurrentScore = playerGame.getScore();
@@ -176,7 +179,7 @@ public class GameplayService {
 
         if (allAnswersAreCorrect) {
             playerAnswer.setIsCorrect(true);
-            int playerNewScore = calculatePlayerNewScore(playerAnswer,playerCurrentScore);
+            int playerNewScore = calculatePlayerNewScore(playerAnswer, playerCurrentScore);
             playerGame.setScore(playerNewScore);
 
         } else {
@@ -187,6 +190,17 @@ public class GameplayService {
         playerAnswer.setStatus(Status.COMPLETED_QUESTION.getLetter());
         playerAnswerService.savePlayerAnswer(playerAnswer);
         playerGameService.savePlayerGame(playerGame);
+        return playerAnswer.getIsCorrect();
+    }
+
+    private void getAndSetGame(Integer gameId, PlayerGame playerGame) {
+        Game game = gameService.getGame(gameId);
+        playerGame.setGame(game);
+    }
+
+    private void getAndSetPlayer(Integer playerId, PlayerGame playerGame) {
+        Player player = playerService.getPlayerById(playerId);
+        playerGame.setPlayer(player);
     }
 
     private static int calculatePlayerNewScore(PlayerAnswer playerAnswer, Integer playerCurrentScore) {
@@ -202,6 +216,7 @@ public class GameplayService {
         }
         return true;
     }
+
     private static boolean isIncorrectMultipleChoiceAnswer(MultipleChoiceAnswerInfo multipleChoiceAnswerInfo, Answer answer) {
         return !answer.getIsCorrect().equals(multipleChoiceAnswerInfo.getIsSelected());
     }
@@ -215,8 +230,8 @@ public class GameplayService {
         }
         return true;
     }
+
     private static boolean isIncorrectSequenceTypeAnswer(SequenceTypeAnswerInfo sequenceTypeAnswerInfo, Answer answer) {
         return !(answer.getIsCorrect().equals(sequenceTypeAnswerInfo.getIsSelected() && answer.getSequence().equals(sequenceTypeAnswerInfo.getSequence())));
     }
-
 }

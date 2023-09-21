@@ -29,7 +29,9 @@ public class GameplayController {
 
     @PatchMapping("/game-answer")
     @Operation(summary = "Uuendab peale küsimuse vastamist andmebaasi andmeid")
-    public void submitPlayerAnswer(@RequestBody StartAnswerRequest startAnswerRequest) {
+    public void submitPlayerAnswer(@RequestParam Integer playerGameId, @RequestParam Integer answerId) {
+        gameplayService.submitPlayerAnswer(playerGameId, answerId);
+
 
         //todo: sellest tuleb siis update
     }

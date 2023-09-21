@@ -128,4 +128,7 @@ public class GameplayService {
         playerGame.setPlayer(player);
     }
 
+    public void submitPlayerAnswer(Integer playerGameId, Integer answerId) {
+
+    }
 }

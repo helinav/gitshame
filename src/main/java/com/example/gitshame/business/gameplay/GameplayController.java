@@ -51,19 +51,19 @@ public class GameplayController {
 
     @PatchMapping("/answer/multiple-choice")
     @Operation(summary = "Uuendab peale mitmiktüüpi küsimuse vastamist andmebaasi andmeid")
-    public Boolean submitMultipleChoicePlayerAnswer(@RequestParam Integer playerGameId, @RequestBody List<MultipleChoiceAnswerInfo> answers) {
+    public AnswerResponse submitMultipleChoicePlayerAnswer(@RequestParam Integer playerGameId, @RequestBody List<MultipleChoiceAnswerInfo> answers) {
        return gameplayService.submitMultipleChoicePlayerAnswer(playerGameId, answers);
     }
 
     @PatchMapping("/answer/sequence")
     @Operation(summary = "Uuendab peale sequencetüüpi küsimuse vastamist andmebaasi andmeid")
-    public Boolean submitSequenceTypePlayerAnswer(@RequestParam Integer playerGameId, @RequestBody List<SequenceTypeAnswerInfo> answers) {
+    public AnswerResponse submitSequenceTypePlayerAnswer(@RequestParam Integer playerGameId, @RequestBody List<SequenceTypeAnswerInfo> answers) {
         return gameplayService.submitSequenceTypePlayerAnswer(playerGameId, answers);
     }
 
     @PatchMapping("/answer-textbox")
     @Operation(summary = "Uuendab peale textboxtüüpi küsimuse vastamist andmebaasi andmeid")
-    public Boolean submitTextBoxPlayerAnswer (@RequestParam Integer playerGameId, @RequestBody TextBoxAnswerInfo answer) {
+    public AnswerResponse submitTextBoxPlayerAnswer (@RequestParam Integer playerGameId, @RequestBody TextBoxAnswerInfo answer) {
         return gameplayService.submitTextBoxPlayerAnswer(playerGameId, answer);
     }
 }

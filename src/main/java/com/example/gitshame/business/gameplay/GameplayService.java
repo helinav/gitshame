@@ -10,6 +10,7 @@ import com.example.gitshame.domain.game.GameService;
 import com.example.gitshame.domain.player.Player;
 import com.example.gitshame.domain.player.PlayerService;
 import com.example.gitshame.domain.player.playeranswer.PlayerAnswer;
+import com.example.gitshame.domain.player.playeranswer.PlayerAnswerMapper;
 import com.example.gitshame.domain.player.playeranswer.PlayerAnswerService;
 import com.example.gitshame.domain.player.playergame.PlayerGame;
 import com.example.gitshame.domain.player.playergame.PlayerGameMapper;
@@ -49,6 +50,8 @@ public class GameplayService {
     private AnswerService answerService;
     @Resource
     private AnswerMapper answerMapper;
+    @Resource
+    private PlayerAnswerMapper playerAnswerMapper;
 
     public PlayerGameDto startNewGame(NewGameRequest request) {
         Integer gameId = request.getGameId();
@@ -117,7 +120,7 @@ public class GameplayService {
     }
 
     @Transactional
-    public Boolean submitMultipleChoicePlayerAnswer(Integer playerGameId, List<MultipleChoiceAnswerInfo> multipleChoiceAnswerInfos) {
+    public AnswerResponse submitMultipleChoicePlayerAnswer(Integer playerGameId, List<MultipleChoiceAnswerInfo> multipleChoiceAnswerInfos) {
         Instant timestamp = TimeConverter.getEstonianTimeZoneInstant();
         PlayerGame playerGame = playerGameService.getPlayerGame(playerGameId);
         Integer playerCurrentScore = playerGame.getScore();
@@ -139,11 +142,11 @@ public class GameplayService {
         playerAnswer.setStatus(Status.COMPLETED_QUESTION.getLetter());
         playerAnswerService.savePlayerAnswer(playerAnswer);
         playerGameService.savePlayerGame(playerGame);
-        return playerAnswer.getIsCorrect();
+        return playerAnswerMapper.toAnswerResponse(playerAnswer);
     }
 
     @Transactional
-    public Boolean submitTextBoxPlayerAnswer(Integer playerGameId, TextBoxAnswerInfo textBoxAnswerInfo) {
+    public AnswerResponse submitTextBoxPlayerAnswer(Integer playerGameId, TextBoxAnswerInfo textBoxAnswerInfo) {
         Instant timestamp = TimeConverter.getEstonianTimeZoneInstant();
         PlayerGame playerGame = playerGameService.getPlayerGame(playerGameId);
         Integer playerCurrentScore = playerGame.getScore();
@@ -163,11 +166,14 @@ public class GameplayService {
         playerAnswer.setStatus(Status.COMPLETED_QUESTION.getLetter());
         playerAnswerService.savePlayerAnswer(playerAnswer);
         playerGameService.savePlayerGame(playerGame);
-        return playerAnswer.getIsCorrect();
+
+        return playerAnswerMapper.toAnswerResponse(playerAnswer);
+
+
     }
 
     @Transactional
-    public Boolean submitSequenceTypePlayerAnswer(Integer playerGameId, List<SequenceTypeAnswerInfo> sequenceTypeAnswerInfos) {
+    public AnswerResponse submitSequenceTypePlayerAnswer(Integer playerGameId, List<SequenceTypeAnswerInfo> sequenceTypeAnswerInfos) {
         Instant timestamp = TimeConverter.getEstonianTimeZoneInstant();
         PlayerGame playerGame = playerGameService.getPlayerGame(playerGameId);
         Integer playerCurrentScore = playerGame.getScore();
@@ -190,7 +196,7 @@ public class GameplayService {
         playerAnswer.setStatus(Status.COMPLETED_QUESTION.getLetter());
         playerAnswerService.savePlayerAnswer(playerAnswer);
         playerGameService.savePlayerGame(playerGame);
-        return playerAnswer.getIsCorrect();
+        return playerAnswerMapper.toAnswerResponse(playerAnswer);
     }
 
     private void getAndSetGame(Integer gameId, PlayerGame playerGame) {

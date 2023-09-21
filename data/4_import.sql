@@ -26,42 +26,42 @@ INSERT INTO public.type (id, name)
 VALUES (DEFAULT, 'textbox');
 
 INSERT INTO public.question (id, type_id, game_id, image_id, status, text, answer_explanation, time_limit)
-VALUES (DEFAULT, 1, 1, 1, 'A', 'Java programmeerimiskeele algne nimi oli:',
+VALUES (DEFAULT, 1, 1, 7, 'A', 'Java programmeerimiskeele algne nimi oli:',
         'Oak tähendab tammepuud, mis sümboliseerib programmeerimiskeele tugevust ja vastupidavust. Java looja Kanada arvutiteadlane James Gosling (s. 1955) valis selle nime, nähes tamme enda akna taga ning leidis, et see sobib hästi nimeks uuele arendamisel olevale keelele. Oak-i nimi muudeti hiljem Java-ks, kuna Oak oli kaubamärgina kasutusel. Nimi Java tuli omakorda Jaava kohvi järgi, mida keele loojad väidetavalt suurtes kogustes tarbisid.',
         60);
 INSERT INTO public.question (id, type_id, game_id, image_id, status, text, answer_explanation, time_limit)
-VALUES (DEFAULT, 1, 1, 1, 'A', 'Millele viitab error "I am a teapot" (olen teekann) ehk "HTTP status code 418"?',
+VALUES (DEFAULT, 1, 1, 8, 'A', 'Millele viitab error "I am a teapot" (olen teekann) ehk "HTTP status code 418"?',
         '"I am a teapot" või "HTTP status code 418" on pärit Interneti Tehnikastandardite Töörühma (IETF, Internet Engineering Task Force) poolt. See loodi algselt 1998. aastal aprillinaljana ja on osa Hyper Text Coffee Pot Control Protocol (HTCPCP) kirjeldusest. See on mõeldud huumorina ja ei ole tõsine HTTP staatuse kood veebiserveritele. IETF kasutas seda nalja, et rõhutada, et mitte kõik HTTP staatuskoodid ei ole tehnilised või praktilised, vaid mõnikord võib neil olla ka humoorikas või kujundlik tähendus.',
         60);
 INSERT INTO public.question (id, type_id, game_id, image_id, status, text, answer_explanation, time_limit)
-VALUES (DEFAULT, 4, 1, 1, 'A',
+VALUES (DEFAULT, 4, 1, 9, 'A',
         'Kirjutage lahtrisse Java kood, mis prindiks konsooli väite: Java oad lõhnavad täna eriti hästi!',
         'Õige vastus on: System.out.print("Java oad lõhnavad hästi!"): Väide tuleb lõpetada semikooloniga! Loodetavasti ei vaevunud sa lauset ümber kirjutama, vaid copy-paste’isid selle mängu küsimusest',
         60);
 INSERT INTO public.question (id, type_id, game_id, image_id, status, text, answer_explanation, time_limit)
-VALUES (DEFAULT, 2, 1, 1, 'A', 'Abstraktsiooni tähendus programmeerimises? Õigeid vastuseid võib olla mitu!',
+VALUES (DEFAULT, 2, 1, 10, 'A', 'Abstraktsiooni tähendus programmeerimises? Õigeid vastuseid võib olla mitu!',
         'Õiged on vastusevariandid nr 2 ja 4. Selle all mõeldakse lähenemisviisi, kus mingi nähtuse analüüsimisel jäetakse mängust välja selle ebaolulised küljed, mis ei mängi rolli antud probleemi lahendamise kontekstis.',
         60);
 INSERT INTO public.question (id, type_id, game_id, image_id, status, text, answer_explanation, time_limit)
-VALUES (DEFAULT, 3, 1, 1, 'A', 'Sea õigesse järjekorda järgnevad muutuja osad:',
+VALUES (DEFAULT, 3, 1, 11, 'A', 'Sea õigesse järjekorda järgnevad muutuja osad:',
         'Õige järjekord on muutuja tüüp, nimi, operaator (=) ja siis väärtus. Näiteks: int myBeans = 100;', 60);
 INSERT INTO public.question (id, type_id, game_id, image_id, status, text, answer_explanation, time_limit)
-VALUES (DEFAULT, 1, 1, 1, 'A', 'Akronüüm "RTFM" tähendus?',
+VALUES (DEFAULT, 1, 1, 12, 'A', 'Akronüüm "RTFM" tähendus?',
         'See väljend viitab olukorrale, kus inimesed küsivad küsimusi või vajavad abi millegi kasutamisel, kuigi ilmsed vastused või juhised on juba olemas kasutusjuhendites või dokumentatsioonis. Akronüümi kasutatakse tihti kerge frustratsiooni või huumoriga, et rõhutada vajadust enne küsimist ise juhendit lugeda.',
         60);
 INSERT INTO public.question (id, type_id, game_id, image_id, status, text, answer_explanation, time_limit)
-VALUES (DEFAULT, 2, 1, 1, 'A', 'Millised neist on Java mitte-primitiivsed andmetüübid?',
+VALUES (DEFAULT, 2, 1, 13, 'A', 'Millised neist on Java mitte-primitiivsed andmetüübid?',
         'Mitte-primitiivsed on Array ja String. Primitiivsed andmetüübid Java programmeerimiskeeles on baasvormid, mis esindavad lihtsamaid andmeid, nagu numbreid, tähemärke ja tõeväärtusi, samas kui mitte-primitiivsed andmetüübid võimaldavad keerukamate struktuuride loomist, esindades objekte ja nende viiteid, nagu String ja ArrayList.',
         60);
 INSERT INTO public.question (id, type_id, game_id, image_id, status, text, answer_explanation, time_limit)
-VALUES (DEFAULT, 1, 1, 1, 'A', '"Rubber Duck" debuggimise printsiip?',
+VALUES (DEFAULT, 1, 1, 14, 'A', '"Rubber Duck" debuggimise printsiip?',
         'Rubber duck debugging on tarkvaraarenduse praktika, kus programmeerija selgitab oma koodi või probleemi kummist pardile. See võiks aidata programmeerijal paremini mõista ja leida lahendusi probleemidele, kuna selgitamine sunnib süvenema ja avastama vigu värskema pilgu läbi.',
         60);
 INSERT INTO public.question (id, type_id, game_id, image_id, status, text, answer_explanation, time_limit)
-VALUES (DEFAULT, 1, 1, 1, 'A', 'Mida tähendab arendajate slängis "YOLO-driven development"?',
+VALUES (DEFAULT, 1, 1,15, 'A', 'Mida tähendab arendajate slängis "YOLO-driven development"?',
         'Riskide võtmine ilma korraliku testimiseta', 60);
 INSERT INTO public.question (id, type_id, game_id, image_id, status, text, answer_explanation, time_limit)
-VALUES (DEFAULT, 4, 1, 1, 'A',
+VALUES (DEFAULT, 4, 1, 16, 'A',
         'Pildil on Java maskott, kes sai nime Ülikooli järgi, kus Java programmeerimiskeel arendati. Mis on selle 4 tähelise maskoti nimi?',
         'Õige vastus on Duke. Duke''i nimi tuleneb Duke''i Ülikoolist Põhja-Carolinas, kus Java esialgne arendus toimus. Duke on Java arendustiimi üheks sümboliks ja kaubamärgiks. Seda kasutatakse Java sündmustel, konverentsidel ning isegi Java dokumentatsioonis. Kuigi päikesekübaraga antropomorfset kohvitassi kujutav maskott on kasutusel olnud aastakümneid, on selle olemasolu ja tähendus mõistatuseks tihtilugu ka pikaaegsetele Java arendajatele.',
         60);

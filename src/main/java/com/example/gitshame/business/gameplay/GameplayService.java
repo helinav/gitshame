@@ -219,6 +219,8 @@ public class GameplayService {
             if (isIncorrectMultipleChoiceAnswer(multipleChoiceAnswerInfo, answer)) {
                 return false;
             }
+        } if (multipleChoiceAnswerInfos.isEmpty()) {
+            return false;
         }
         return true;
     }
@@ -238,6 +240,6 @@ public class GameplayService {
     }
 
     private static boolean isIncorrectSequenceTypeAnswer(SequenceTypeAnswerInfo sequenceTypeAnswerInfo, Answer answer) {
-        return !(answer.getIsCorrect().equals(sequenceTypeAnswerInfo.getIsSelected() && answer.getSequence().equals(sequenceTypeAnswerInfo.getSequence())));
+        return !answer.getSequence().equals(sequenceTypeAnswerInfo.getSequence());
     }
 }

@@ -16,4 +16,5 @@ import java.io.Serializable;
 public class AnswerResponse implements Serializable {
 
     private Boolean isCorrect = false;
+    private Integer score;
 }

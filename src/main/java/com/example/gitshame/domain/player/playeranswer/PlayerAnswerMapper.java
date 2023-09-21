@@ -12,5 +12,6 @@ public interface PlayerAnswerMapper {
     PlayerAnswer toPlayerAnswer(StartAnswerRequest startAnswerRequest);
 
 
+    @Mapping(source = "playerGame.score", target = "score")
     AnswerResponse toAnswerResponse(PlayerAnswer playerAnswer);
 }

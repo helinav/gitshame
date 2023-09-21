@@ -1,5 +1,6 @@
 package com.example.gitshame.business.gameplay;
 
+import com.example.gitshame.business.Status;
 import com.example.gitshame.business.gameplay.dto.*;
 import com.example.gitshame.domain.answer.Answer;
 import com.example.gitshame.domain.answer.AnswerMapper;
@@ -10,6 +11,7 @@ import com.example.gitshame.domain.player.Player;
 import com.example.gitshame.domain.player.PlayerService;
 import com.example.gitshame.domain.player.playeranswer.PlayerAnswer;
 import com.example.gitshame.domain.player.playeranswer.PlayerAnswerMapper;
+import com.example.gitshame.domain.player.playeranswer.PlayerAnswerRepository;
 import com.example.gitshame.domain.player.playeranswer.PlayerAnswerService;
 import com.example.gitshame.domain.player.playergame.PlayerGame;
 import com.example.gitshame.domain.player.playergame.PlayerGameMapper;
@@ -17,11 +19,14 @@ import com.example.gitshame.domain.player.playergame.PlayerGameService;
 import com.example.gitshame.domain.question.*;
 import com.example.gitshame.util.TimeConverter;
 import jakarta.annotation.Resource;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import static com.example.gitshame.business.Status.NEXT_QUESTION;
 import static com.example.gitshame.business.Status.PENDING_QUESTION;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,6 +55,11 @@ public class GameplayService {
     private AnswerService answerService;
     @Resource
     private AnswerMapper answerMapper;
+    private final PlayerAnswerRepository playerAnswerRepository;
+
+    public GameplayService(PlayerAnswerRepository playerAnswerRepository) {
+        this.playerAnswerRepository = playerAnswerRepository;
+    }
 
     public PlayerGameDto startNewGame(NewGameRequest request) {
         Integer gameId = request.getGameId();
@@ -98,17 +108,17 @@ public class GameplayService {
     }
 
 
-    public List<SelectResponse> getSelectAnswers(Integer questionId) {
+    public List<MultipleChoiceAnswerInfo> getSelectAnswers(Integer questionId) {
         List<Answer> answers = answerService.getAnswers(questionId);
         return answerMapper.toSelectResponse(answers);
     }
 
-    public List<SequenceResponse> getSequenceAnswers(Integer questionId) {
+    public List<SequenceTypeAnswerInfo> getSequenceAnswers(Integer questionId) {
         List<Answer> answers = answerService.getAnswers(questionId);
         return answerMapper.toSequenceResponses(answers);
     }
 
-    public TextBoxResponse getTextBoxAnswer(Integer questionId) {
+    public TextBoxAnswerInfo getTextBoxAnswer(Integer questionId) {
         Answer answer = answerService.getAnswer(questionId);
         return answerMapper.toTextBoxResponse(answer);
     }
@@ -128,7 +138,85 @@ public class GameplayService {
         playerGame.setPlayer(player);
     }
 
-    public void submitPlayerAnswer(Integer playerGameId, Integer answerId) {
+    @Transactional
+    public void submitMultipleChoicePlayerAnswer(Integer playerGameId, List<MultipleChoiceAnswerInfo> multipleChoiceAnswerInfos) {
+        Instant timestamp = TimeConverter.getEstonianTimeZoneInstant();
+        PlayerGame playerGame = playerGameService.getPlayerGame(playerGameId);
+        Integer playerCurrentScore = playerGame.getScore();
 
+        PlayerAnswer playerAnswer = playerAnswerService.getPlayerPendingAnswerBy(playerGameId);
+        playerAnswer.setEndTime(timestamp);
+
+        boolean allAnswersAreCorrect = allMultipleChoiceAnswersAreCorrect(multipleChoiceAnswerInfos);
+
+        if (allAnswersAreCorrect) {
+            playerAnswer.setIsCorrect(true);
+            int playerNewScore = calculatePlayerNewScore(playerAnswer,playerCurrentScore);
+            playerGame.setScore(playerNewScore);
+
+        } else {
+            playerAnswer.setIsCorrect(false);
+            playerGame.setStrikeCount(playerGame.getStrikeCount() + 1);
+        }
+
+        playerAnswer.setStatus(Status.COMPLETED_QUESTION.getLetter());
+        playerAnswerService.savePlayerAnswer(playerAnswer);
+        playerGameService.savePlayerGame(playerGame);
     }
+
+    public void submitSequenceTypePlayerAnswer(Integer playerGameId, List<SequenceTypeAnswerInfo> sequenceTypeAnswerInfos) {
+        Instant timestamp = TimeConverter.getEstonianTimeZoneInstant();
+        PlayerGame playerGame = playerGameService.getPlayerGame(playerGameId);
+        Integer playerCurrentScore = playerGame.getScore();
+
+        PlayerAnswer playerAnswer = playerAnswerService.getPlayerPendingAnswerBy(playerGameId);
+        playerAnswer.setEndTime(timestamp);
+
+        boolean allAnswersAreCorrect = allSequenceTypeAnswersAreCorrect(sequenceTypeAnswerInfos);
+
+        if (allAnswersAreCorrect) {
+            playerAnswer.setIsCorrect(true);
+            int playerNewScore = calculatePlayerNewScore(playerAnswer,playerCurrentScore);
+            playerGame.setScore(playerNewScore);
+
+        } else {
+            playerAnswer.setIsCorrect(false);
+            playerGame.setStrikeCount(playerGame.getStrikeCount() + 1);
+        }
+
+        playerAnswer.setStatus(Status.COMPLETED_QUESTION.getLetter());
+        playerAnswerService.savePlayerAnswer(playerAnswer);
+        playerGameService.savePlayerGame(playerGame);
+    }
+
+    private static int calculatePlayerNewScore(PlayerAnswer playerAnswer, Integer playerCurrentScore) {
+        return playerCurrentScore + (int) (playerAnswer.getQuestion().getTimeLimit() - Duration.between(playerAnswer.getStartTime(), playerAnswer.getEndTime()).getSeconds());
+    }
+
+    private boolean allMultipleChoiceAnswersAreCorrect(List<MultipleChoiceAnswerInfo> multipleChoiceAnswerInfos) {
+        for (MultipleChoiceAnswerInfo multipleChoiceAnswerInfo : multipleChoiceAnswerInfos) {
+            Answer answer = answerService.getAnswerBy(multipleChoiceAnswerInfo.getAnswerId());
+            if (isIncorrectMultipleChoiceAnswer(multipleChoiceAnswerInfo, answer)) {
+                return false;
+            }
+        }
+        return true;
+    }
+    private static boolean isIncorrectMultipleChoiceAnswer(MultipleChoiceAnswerInfo multipleChoiceAnswerInfo, Answer answer) {
+        return !answer.getIsCorrect().equals(multipleChoiceAnswerInfo.getIsSelected());
+    }
+
+    private boolean allSequenceTypeAnswersAreCorrect(List<SequenceTypeAnswerInfo> sequenceTypeAnswerInfos) {
+        for (SequenceTypeAnswerInfo sequenceTypeAnswerInfo : sequenceTypeAnswerInfos) {
+            Answer answer = answerService.getAnswerBy(sequenceTypeAnswerInfo.getAnswerId());
+            if (isIncorrectSequenceTypeAnswer(sequenceTypeAnswerInfo, answer)) {
+                return false;
+            }
+        }
+        return true;
+    }
+    private static boolean isIncorrectSequenceTypeAnswer(SequenceTypeAnswerInfo sequenceTypeAnswerInfo, Answer answer) {
+        return !(answer.getIsCorrect().equals(sequenceTypeAnswerInfo.getIsSelected() && answer.getSequence().equals(sequenceTypeAnswerInfo.getSequence())));
+    }
+
 }

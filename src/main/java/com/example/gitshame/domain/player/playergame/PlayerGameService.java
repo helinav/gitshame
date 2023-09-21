@@ -19,4 +19,8 @@ public class PlayerGameService {
         return playerGameRepository.findPlayerGameByGame(gameId);
 
     }
+
+    public PlayerGame getPlayerGame(Integer playerGameId) {
+        return playerGameRepository.getReferenceById(playerGameId);
+    }
 }

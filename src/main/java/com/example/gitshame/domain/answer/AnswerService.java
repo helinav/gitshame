@@ -23,4 +23,8 @@ public class AnswerService {
     public Answer getAnswer(Integer questionId) {
         return answerRepository.getAnswerBy(questionId);
     }
+
+    public Answer getAnswerBy(Integer answerId) {
+        return answerRepository.getReferenceById(answerId);
+    }
 }

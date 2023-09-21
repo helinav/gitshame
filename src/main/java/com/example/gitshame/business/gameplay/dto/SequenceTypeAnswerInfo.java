@@ -15,9 +15,9 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class TextBoxResponse implements Serializable {
+public class SequenceTypeAnswerInfo implements Serializable {
     private Integer answerId;
-    @NotNull
-    @Size(max = 255)
-    private String text = "";
+    private String text;
+    private Integer sequence;
+    private Boolean isSelected =false;
 }

@@ -27,30 +27,33 @@ public class GameplayController {
         return gameplayService.getNextQuestion(playerGameId);
     }
 
-    @PatchMapping("/game-answer")
-    @Operation(summary = "Uuendab peale küsimuse vastamist andmebaasi andmeid")
-    public void submitPlayerAnswer(@RequestParam Integer playerGameId, @RequestParam Integer answerId) {
-        gameplayService.submitPlayerAnswer(playerGameId, answerId);
-
-
-        //todo: sellest tuleb siis update
+    @PatchMapping("/answer/multiple-choice")
+    @Operation(summary = "Uuendab peale mitmiktüüpi küsimuse vastamist andmebaasi andmeid")
+    public void submitMultipleChoicePlayerAnswer(@RequestParam Integer playerGameId, @RequestBody List<MultipleChoiceAnswerInfo> answers) {
+        gameplayService.submitMultipleChoicePlayerAnswer(playerGameId, answers);
     }
 
-    @GetMapping("/answers/select")
-    @Operation(summary = "Toob ära select-küsimusetüüpide vastused.", description = "Tagastab JSONi vastavalt küsimusetüübile")
-    public List<SelectResponse> getSelectAnswers(@RequestParam Integer questionId) {
+    @PatchMapping("/answer/sequence")
+    @Operation(summary = "Uuendab peale sequencetüüpi küsimuse vastamist andmebaasi andmeid")
+    public void submitSequenceTypePlayerAnswer(@RequestParam Integer playerGameId, @RequestBody List<SequenceTypeAnswerInfo> answers) {
+        gameplayService.submitSequenceTypePlayerAnswer(playerGameId, answers);
+    }
+
+    @GetMapping("/possible-answers/multiple-choice")
+    @Operation(summary = "Toob ära mitmik küsimusetüübi võimalikud vastused.", description = "Tagastab JSONi vastavalt küsimusetüübile")
+    public List<MultipleChoiceAnswerInfo> getSelectAnswers(@RequestParam Integer questionId) {
         return gameplayService.getSelectAnswers(questionId);
     }
 
-    @GetMapping("/answers/sequence")
+    @GetMapping("/possible-answers/sequence")
     @Operation(summary = "Toob ära sequence küsimusetüübi vastused", description = "Tagastab JSONi vastavalt küsimusetüübile")
-    public List<SequenceResponse> getSequenceAnswers(@RequestParam Integer questionId) {
+    public List<SequenceTypeAnswerInfo> getSequenceAnswers(@RequestParam Integer questionId) {
         return gameplayService.getSequenceAnswers(questionId);
     }
 
-    @GetMapping("/answers/textbox")
+    @GetMapping("/possible-answer/textbox")
     @Operation(summary = "Toob ära textboxi küsimusetüübi vastused", description = "Tagastab JSONi vastavalt küsimusetüübile")
-    public TextBoxResponse getTextBoxAnswer(@RequestParam Integer questionId) {
+    public TextBoxAnswerInfo getTextBoxAnswer(@RequestParam Integer questionId) {
         return gameplayService.getTextBoxAnswer(questionId);
     }
 

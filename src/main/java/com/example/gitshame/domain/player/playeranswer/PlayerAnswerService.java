@@ -50,4 +50,9 @@ public class PlayerAnswerService {
     public long getNumberOfQuestionsCompleted(Integer playerGameId) {
        return  playerAnswerRepository.countPlayerAnswersBy(playerGameId,Status.COMPLETED_QUESTION.getLetter());
     }
+
+    public PlayerAnswer getPlayerPendingAnswerBy(Integer playerGameId) {
+        return playerAnswerRepository.getPlayerAnswerBy(playerGameId, Status.PENDING_QUESTION.getLetter());
+
+    }
 }

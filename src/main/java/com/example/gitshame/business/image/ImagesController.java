@@ -20,7 +20,7 @@ public class ImagesController {
     private ImagesService imagesService;
 
     @PostMapping("/avatar")
-    @Operation(summary = "Tagastab avatari pildi")
+    @Operation(summary = "Võimaldab andmebaasi pilti lisada")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "OK")})
     public void createAndSaveAvatar(@RequestBody AvatarRequest request) {

@@ -1,6 +1,7 @@
-package com.example.gitshame.domain.player;
+package com.example.gitshame.domain.player.playergame;
 
 import com.example.gitshame.domain.game.Game;
+import com.example.gitshame.domain.player.Player;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;

@@ -1,4 +1,4 @@
-package com.example.gitshame.domain.question;
+package com.example.gitshame.domain.answer;
 
 import com.example.gitshame.domain.question.Question;
 import jakarta.persistence.*;
